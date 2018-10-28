@@ -1,0 +1,1505 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Funkcionální programování v C\#</title>
+  <style type="text/css">
+    /* Color Palette Based on Monokai
+
+white       : #fafafa
+light grey  : #efefef
+grey        : #75715e
+dark grey   : #272822
+black       : #191919
+
+light blue  : #66d9ef
+blue        : #1db4d0
+lavender    : #bf79db
+magenta     : #f92672
+light green : #a6e22e
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Hind:400,500,600,700,300);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata:400,700);
+
+/* Theme Styles */
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 100%;
+  color: #191919;
+  background-color: #000;
+}
+
+/* Custom Slide Styles */
+#slide-1 {
+  color: #fafafa;
+  background: #222;
+  background-size: cover;
+}
+#slide-1::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: " ";
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background: url('background-image.jpg') center center no-repeat;
+  background-size: cover;
+}
+
+#slide-1 h1 {
+  text-shadow: 1px 2px 4px #191919;
+}
+
+#slide-1 p {
+  text-shadow: 1px 1px 1px #191919;
+}
+
+.center {
+  text-align: center;
+}
+
+img.badge {
+  height: 128px;
+  width: 128px !important;
+  border-radius: 50% !important;
+}
+
+
+/* The following is needed for the ESC overview slide selection */
+.slides {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.slides.active .slide:not(.hidden) {
+  border: 22px solid red;
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  cursor: pointer;
+  display: none;
+}
+
+.slides.active .slide:hover .slide-overlay::before {
+  content: '▶';
+  text-align: center;
+  line-height: 300px;
+  font-size: 200px;
+  color: #fff;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.slides.active .slide:hover .slide-overlay{
+  display: block;
+  background: rgba(0,0,0,0.5);
+}
+.slide-wrapper {
+  margin: 7px;
+  transition: all 250ms;
+}
+
+/* Presentation Styles */
+.slide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 100px;
+  z-index: 1;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: #FFF;
+}
+
+.slide::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: " ";
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background: url('clean-white-polygon-backgrounds-7.jpg') center center no-repeat;
+  background-size: cover;
+  z-index: 1;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  max-width: 800px;
+  max-height: 600px;
+  margin: 80px auto 0 auto;
+  padding: 0;
+  font-size: 200%;
+  font-weight: 200;
+  line-height: 1.375;
+  overflow: hidden;
+}
+
+.slide-content img {
+  width: 100%;
+  border-radius: 3px;
+}
+
+.controls {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.overview {
+  display: inline-block;
+  float: left;
+  color: #C7C7C7;
+  margin-right: 15px;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 30px;
+  cursor: pointer;
+}
+.overview:hover {
+  color: #1DB4D0;
+}
+.arrow {
+  float: left;
+  height: 0;
+  width: 0;
+  margin-right: 15px;
+  border: 15px solid #C7C7C7;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-right-width: 25px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-left-width: 0;
+}
+
+.next {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-right-width: 0;
+  border-bottom-color: transparent;
+  border-left-width: 25px;
+}
+
+.prev:hover {
+  border-right-color: #1DB4D0;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #1DB4D0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Hind', sans-serif;
+  font-weight: 500;
+}
+
+h1 {
+  margin: 170px 0 0;
+  font-size: 300%;
+  text-align: center;
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 5px 0;
+  font-size: 100%;
+  font-weight: 200;
+  text-align: center;
+  line-height: 1.2;
+}
+
+h3 {
+  margin: 0;
+  padding-bottom: 15px;
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px ridge #191919;
+}
+
+ul {
+  font-weight: 200;
+  line-height: 1.375;
+  padding: 20px 0 0 60px;
+}
+
+blockquote {
+  padding-left: 20px;
+  margin-left: 0;
+  background: #efefef;
+  border-left: 5px solid #272822;
+  border-radius: 0 3px 3px 0;
+}
+
+blockquote p {
+  padding: .5em;
+  color: #272822;
+}
+
+.left {
+  float: left;
+  width: 48%;
+}
+
+.right {
+  float: right;
+  width: 48%;
+}
+
+.author h1 {
+  margin-bottom: 30px;
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+}
+
+.author h3 {
+  font-size: 95%;
+  font-weight: 100;
+  text-align: center;
+  border: none;
+}
+
+.author h3.twitter::before {
+  content: 'Twitter: ';
+}
+
+.author h3.github::before {
+  content: 'Github: ';
+}
+
+.author h3.email::before {
+  content: 'Email: ';
+}
+
+.author h3.url::before {
+  content: 'Web: ';
+}
+
+a {
+  text-decoration: none;
+  color: #1db4d0;
+}
+
+a:hover {
+  color: #1db4d0;
+  border-bottom: 1px solid #1db4d0;
+}
+
+hr {
+  border: 1px solid #272822;
+}
+
+pre {
+  font-size: 75%;
+  line-height: 1.3;
+}
+
+table td,
+table th {
+  padding-right: 3em;
+  text-align: left;
+}
+
+.progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  z-index: 2;
+}
+
+.progress-bar {
+  height: 3px;
+  width: 0;
+  background-color: #1DB4D0;
+  -webkit-transition: width .15s ease-out;
+     -moz-transition: width .15s ease-out;
+       -o-transition: width .15s ease-out;
+          transition: width .15s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Code Highlighting */
+code {
+  padding: .1em .35em;
+  font-family: 'Inconsolata';
+  background-color: #fafafa;
+  border-radius: 3px;
+}
+
+pre code {
+  display: block;
+  padding: .5em;
+  font-family: 'Inconsolata';
+  font-weight: 400;
+  overflow-y: hidden;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+code.lang-bash-blank{
+  background: #000;
+  color: #fff!important;
+}
+code.lang-bash-blank-small{
+  background: #000;
+  color: #fff!important;
+  font-size: 0.45em;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 6px;
+  box-shadow: inset 0 -4px 0 #bbb;
+}
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Responsiveness */
+@media (max-width: 850px) {
+  body {
+    font-size: 70%;
+  }
+
+  .slide {
+    padding: 50px;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev,
+  .prev:hover {
+    border-right-color: rgba(135, 135, 135, .5);
+  }
+
+  .next,
+  .next:hover {
+    border-left-color: rgba(135, 135, 135, .5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    overflow: hidden;
+    font-size: 50%;
+  }
+
+  .slide {
+    padding: 10px;
+  }
+  .slide-content {
+    height: 340px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+  }
+
+  body {
+    float: none !important;
+    padding: 0;
+    margin: 0 auto !important;
+    overflow: visible;
+    font-size: 52%;
+    background: none !important;
+    border: 0;
+  }
+
+  .progress,
+  .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+    border: 1px solid #222;
+
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+<div class="slides">
+    <div class="slide-wrapper">
+      <div class="slide  " id="slide-1">
+        <div data-id="1" class="slide-overlay"></div>
+        <section class="slide-content"><h1 id="funkcion-ln-programov-n-v-c-">Funkcionální programování v C#</h1>
+<h2 id="josef-star-chfojt-">Josef Starýchfojtů</h2>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-2">
+        <div data-id="2" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="kdo-to-je-">Kdo to je ?</h3>
+<ul>
+<li>Josef Starýchfojtů</li>
+<li>MFF UK</li>
+<li>Mews Systems (<a href="https://www.mewssystems.com/">https://www.mewssystems.com/</a>)</li>
+<li><a href="https://github.com/starychfojtu">https://github.com/starychfojtu</a></li>
+<li><a href="https://twitter.com/JStarychfojtu">https://twitter.com/JStarychfojtu</a></li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-3">
+        <div data-id="3" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="co-byste-tak-ekali">Co byste tak čekali</h3>
+<ul>
+<li><a href="https://fsprojects.github.io/Fabulous/">https://fsprojects.github.io/Fabulous/</a></li>
+<li>Nedostatek (FP) programátorů</li>
+<li>Moc z nás není na zelené louce</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden  " id="slide-4">
+        <div data-id="4" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="funkcion-ln-programov-n-">Funkcionální programování</h3>
+<ul>
+<li>Referenční transparentnost</li>
+</ul>
+<p><code>f(5) = 10</code> =&gt;
+<code>var a = f(5)</code> = <code>var a = 10</code></p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-5">
+        <div data-id="5" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="funkcion-ln-programov-n-">Funkcionální programování</h3>
+<ul>
+<li>Referenční transparentnost</li>
+</ul>
+<p><code>f(5) = 10</code> =&gt;
+<code>var a = f(5)</code> = <code>var a = 10</code></p>
+<ul>
+<li>Pure funkce</li>
+</ul>
+<p>f(x) : f je pure funkce &lt;=&gt; f je RT pro každé x RT</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-6">
+        <div data-id="6" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="funkcion-ln-programov-n-">Funkcionální programování</h3>
+<ul>
+<li>Referenční transparentnost</li>
+</ul>
+<p><code>f(5) = 10</code> =&gt;
+<code>var a = f(5)</code> = <code>var a = 10</code></p>
+<ul>
+<li>Pure funkce</li>
+</ul>
+<p>f(x) : f je pure funkce &lt;=&gt; f je RT pro každé x RT </p>
+<ul>
+<li>Determinismus</li>
+</ul>
+<p><code>a = b</code> =&gt; <code>f(a) = f(b)</code></p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-7">
+        <div data-id="7" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="pure-funkce-je-">Pure funkce je...</h3>
+<ul>
+<li>Jednoduše paralelizovatelné</li>
+<li>Snadně testovatelná</li>
+<li>Lehce cachovatelná</li>
+<li>Zbavení se faktoru času =&gt; lehčí reasoning</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-8">
+        <div data-id="8" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="-i-lehko-composovateln-">...i lehko composovatelná</h3>
+<pre><code>f: a -&gt; b
+g: b -&gt; c
+
+composed : a -&gt; c
+composed = f &gt;&gt; g
+</code></pre></section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-9">
+        <div data-id="9" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="fp-vs-oop">FP vs OOP</h3>
+<ul>
+<li>těžké definovat (pure funkce vs polymorfismus ??)</li>
+<li>zvyky, techniky, patterny apod. se často spojují s paradigmatem</li>
+<li>podíváme se na ty, které se spojují s FP</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-10">
+        <div data-id="10" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-11">
+        <div data-id="11" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z</span>)</span>
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params">Year x, Month y, Day z</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-12">
+        <div data-id="12" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z</span>)</span>
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params">Year x, Month y, Day z</span>)</span>
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Either&lt;Date, DateError&gt; <span class="hljs-title">Create</span>(<span class="hljs-params">Year x, Month y, Day z</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-13">
+        <div data-id="13" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost-2">Silná typovost 2</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-14">
+        <div data-id="14" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost-2">Silná typovost 2</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> IOption&lt;Person&gt; <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-15">
+        <div data-id="15" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost-3">Silná typovost 3</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-16">
+        <div data-id="16" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost-3">Silná typovost 3</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car, <span class="hljs-keyword">out</span> Error error</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-17">
+        <div data-id="17" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="siln-typovost-3">Silná typovost 3</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car, <span class="hljs-keyword">out</span> Error error</span>)</span>
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Either&lt;Car, RepairError&gt; <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-18">
+        <div data-id="18" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="immutability">Immutability</h3>
+<pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span>(<span class="hljs-params">PersonName name, MailAddress email</span>)
+    </span>{
+        Name = name;
+        Email = email;
+    }
+
+    <span class="hljs-keyword">public</span> PersonName Name { <span class="hljs-keyword">get</span>; }
+    <span class="hljs-keyword">public</span> MailAddress Email { <span class="hljs-keyword">get</span>; }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Person <span class="hljs-title">WithEmail</span>(<span class="hljs-params">MailAddress email</span>) </span>=&gt;
+        <span class="hljs-keyword">new</span> Person(Name, email);
+}
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-19">
+        <div data-id="19" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="expressions-over-statements">Expressions over statements</h3>
+<pre><code class="lang-csharp"><span class="hljs-keyword">int</span> result;
+
+<span class="hljs-keyword">if</span> (something) 
+{
+    result = <span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">else</span> 
+{
+    result = <span class="hljs-number">2</span>;
+}
+
+<span class="hljs-keyword">return</span> result;
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-20">
+        <div data-id="20" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="expressions-over-statements">Expressions over statements</h3>
+<pre><code class="lang-csharp"><span class="hljs-keyword">int</span> result;
+
+<span class="hljs-keyword">if</span> (something) 
+{
+    result = <span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">else</span> 
+{
+    result = <span class="hljs-number">2</span>;
+}
+
+<span class="hljs-keyword">return</span> result;
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-keyword">return</span> something ? <span class="hljs-number">1</span> : <span class="hljs-number">2</span>;
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-21">
+        <div data-id="21" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="co-s-t-mhle-">Co s tímhle ?</h3>
+<pre><code class="lang-csharp">StreamReader sr;
+<span class="hljs-keyword">int</span> result;
+<span class="hljs-keyword">try</span> {
+   sr = <span class="hljs-keyword">new</span> StreamReader(fileName);
+   result = sr.Read();
+} <span class="hljs-keyword">catch</span> (IOException e) {
+    Log(e);
+    result = <span class="hljs-number">-1</span>;
+} <span class="hljs-keyword">finally</span> {
+    sr.Dispose();
+}
+<span class="hljs-keyword">return</span> result;
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-22">
+        <div data-id="22" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="c-jako-funkcion-ln-jazyk">C# jako funkcionální jazyk</h3>
+<ul>
+<li>delegáty</li>
+<li>lambda funkce</li>
+<li>LINQ</li>
+<li>tuples</li>
+<li>some type inference</li>
+<li>static using</li>
+<li>System.Collections.Immutable</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-23">
+        <div data-id="23" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="c-8-jako-funkcion-ln-j-jazyk">C# 8 jako funkcionálnější jazyk</h3>
+<ul>
+<li>pattern matching (switch expression)</li>
+<li>records</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-24">
+        <div data-id="24" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="c-jako-je-t-funkcion-ln-j-jazyk">C# jako ještě funkcionálnější jazyk</h3>
+<ul>
+<li>FuncSharp (<a href="https://github.com/siroky/FuncSharp">https://github.com/siroky/FuncSharp</a>)</li>
+<li>LanguageExt (<a href="https://github.com/louthy/language-ext">https://github.com/louthy/language-ext</a>)</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-25">
+        <div data-id="25" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="unit-type">Unit type</h3>
+<pre><code class="lang-csharp">Func&lt;T&gt; vs Action&lt;T&gt;
+</code></pre>
+<pre><code class="lang-csharp">Task&lt;T&gt; vs Task
+</code></pre>
+<p>...</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-26">
+        <div data-id="26" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="pattern-matching">Pattern matching</h3>
+<ul>
+<li>switch </li>
+<li>C# 8 switch expression</li>
+</ul>
+<pre><code class="lang-Fsharp"><span class="hljs-keyword">match</span> (x, y) <span class="hljs-keyword">with</span>
+| (<span class="hljs-number">5</span>, _) -&gt; ...
+| (_ <span class="hljs-number">12</span>) -&gt; ...
+| _ -&gt; ...
+
+<span class="hljs-keyword">match</span> list <span class="hljs-keyword">with</span>
+| (head, tail) -&gt; ...
+| [x, y, z] -&gt; ...
+| _ -&gt; ...
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-27">
+        <div data-id="27" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="probl-m">Problém</h3>
+<ul>
+<li>chceme funkci co k nullable vstupu přičte 5 a vydělí druhým parametrem</li>
+<li>pokud se něco pokazí, vrátí odpověď na všechno</li>
+</ul>
+<pre><code class="lang-csharp">
+<span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params"><span class="hljs-keyword">int</span>? input, <span class="hljs-keyword">int</span> divider</span>)
+</span>{
+    <span class="hljs-keyword">var</span> x = input <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> ? <span class="hljs-literal">null</span> : input.Value + <span class="hljs-number">5</span>;
+    <span class="hljs-keyword">var</span> y = x <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> || divider == <span class="hljs-number">0</span> ? <span class="hljs-literal">null</span> : x.Value / divider;
+    <span class="hljs-keyword">return</span> y <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> ? <span class="hljs-number">42</span> : y.Value;
+}
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-28">
+        <div data-id="28" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="jin-mo-nost">Jiná možnost</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params"><span class="hljs-keyword">int</span>? input, <span class="hljs-keyword">int</span> divider</span>)
+</span>{
+    <span class="hljs-keyword">var</span> <span class="hljs-keyword">default</span> = <span class="hljs-number">42</span>;
+    <span class="hljs-keyword">if</span> (input <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> || divider == <span class="hljs-number">0</span>)
+    {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">default</span>;
+    }
+
+    <span class="hljs-keyword">return</span> (input.Value + <span class="hljs-number">5</span>) / divider;
+}
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-29">
+        <div data-id="29" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="option">Option</h3>
+<pre><code class="lang-csharp">IOption&lt;<span class="hljs-keyword">int</span>&gt; ~ <span class="hljs-keyword">int</span>?
+IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Person?)
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> IOption&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">Div</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b</span>)
+
+<span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params">IOption&lt;<span class="hljs-keyword">int</span>&gt; input, <span class="hljs-keyword">int</span> divider</span>) </span>=&gt;
+    input
+        .Map(v =&gt; v + <span class="hljs-number">5</span>)
+        .FlatMap(v =&gt; Div(v, divider))
+        .GetOrElse(<span class="hljs-number">42</span>);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-30">
+        <div data-id="30" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="algebraick-datov-typy">Algebraické datové typy</h3>
+<ul>
+<li>Product (N-ární tuple) = AND</li>
+<li><p>Coproduct = OR</p>
+</li>
+<li><p>problém:</p>
+<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> ParagraphReader();
+<span class="hljs-keyword">var</span> result = reader.Read(); 
+</code></pre>
+</li>
+<li>Co to asi vrací ? null pro konec nebo snad &quot;&quot; ?</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-31">
+        <div data-id="31" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="coproduct-to-rescue">Coproduct to rescue</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> ICoproduct3&lt;Line, ParagraphEnd, DocumentEnd&gt; <span class="hljs-title">Read</span>(<span class="hljs-params"></span>)</span>;
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> ParagraphReader();
+<span class="hljs-keyword">var</span> result = reader.Read();
+result.Match(
+    line =&gt; ProcessLine(line),
+    paragraphEnd =&gt; EndParagrapsh(),
+    end =&gt; End()
+);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-32">
+        <div data-id="32" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="f-sneak-peak">F# sneak peak</h3>
+<pre><code class="lang-fsharp"><span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">ReaderResult</span> </span>= 
+    | Line <span class="hljs-keyword">of</span> string
+    | ParagraphEnd
+    | DocumentEnd
+
+<span class="hljs-keyword">let</span> f = 
+    <span class="hljs-keyword">match</span> read () <span class="hljs-keyword">with</span>
+    | Line l -&gt; process l
+    | ParagraphEnd -&gt; ...
+    | DocumentEnd -&gt; ...
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-33">
+        <div data-id="33" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="error-handling">Error handling</h3>
+<pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> SignUpError
+{
+    AccountAlreadyExists,
+    InvalidEmail,
+    PasswordTooShort,
+    NoConnection
+}
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Account, SignUpError&gt; <span class="hljs-title">SignUp</span>(<span class="hljs-params">Credentials creds</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">public</span> Email <span class="hljs-title">CreateSignUpEmail</span>(<span class="hljs-params">Account account</span>)</span>;
+
+<span class="hljs-keyword">var</span> email = SignUp(email, password)
+    .Map(SendEmail);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-34">
+        <div data-id="34" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="error-handling">Error handling</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Account, SignUpError&gt; <span class="hljs-title">SignUp</span>(<span class="hljs-params">Credentials creds</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Email, EmailError&gt; <span class="hljs-title">CreateSignUpEmail</span>(<span class="hljs-params">Account acc</span>)</span>;
+
+<span class="hljs-keyword">var</span> email = SignUp(email, password)
+    .MapError(CreateCommonError)
+    .FlatMap(a =&gt; CreateSignUpEmail(a)
+        .MapError(CreateCommonError)
+    );
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Account&gt; <span class="hljs-title">SignUp</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> email, <span class="hljs-keyword">string</span> password</span>)</span>;
+
+<span class="hljs-keyword">var</span> email = SignUp(email, password)
+    .FlatMap(CreateSignUpEmail);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-35">
+        <div data-id="35" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="validation">Validation</h3>
+<pre><code class="lang-csharp">
+<span class="hljs-keyword">public</span> ITry&lt;Person, Error[]&gt; Create(<span class="hljs-keyword">string</span> name, <span class="hljs-keyword">string</span> email) =&gt;
+    Try.Aggregate(
+        ValidateName(name),
+        ValidateEmail(email)
+        (n, e) =&gt; <span class="hljs-keyword">new</span> Person(n, e)
+    );
+
+<span class="hljs-keyword">private</span> ITry&lt;Name, Error[]&gt; ValidateName(<span class="hljs-keyword">string</span> name);
+<span class="hljs-keyword">private</span> ITry&lt;Email, Error[]&gt; ValidateEmail(<span class="hljs-keyword">string</span> email);
+<span class="hljs-keyword">private</span> ITry&lt;Phone, Error[]&gt; ValidatePhone(<span class="hljs-keyword">string</span> phone);
+
+<span class="hljs-keyword">private</span> ITry&lt;Name, Error[]&gt; ValidateName(<span class="hljs-keyword">string</span> name) =&gt;
+    name.IsNullOrEmpty
+        ? Try.Error&lt;Name, Error[]&gt;(Error.NameCannotBeEmpty)
+        : Try.Success&lt;Name, Error[]&gt;(<span class="hljs-keyword">new</span> Name(name));
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden  " id="slide-36">
+        <div data-id="36" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="example">Example</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> Person <span class="hljs-title">GetById</span>(<span class="hljs-params">Guid id</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">DoSomething</span>(<span class="hljs-params">Person person</span>)</span>;
+
+<span class="hljs-keyword">var</span> person = PersonRepository.GeById(id);
+<span class="hljs-keyword">if</span> (person <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span>)
+    <span class="hljs-keyword">return</span> HttpNotFound();
+
+<span class="hljs-keyword">try</span> 
+{
+    PersonService.DoSomething(person);
+}
+<span class="hljs-keyword">catch</span> (SomePersonException e)
+{
+    <span class="hljs-keyword">return</span> HttpBadRequest();
+}
+<span class="hljs-keyword">return</span> HttpOk();
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-37">
+        <div data-id="37" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="more-functional-example">More functional example</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> IOption&lt;Person&gt; <span class="hljs-title">GetById</span>(<span class="hljs-params">Guid id</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Unit&gt; <span class="hljs-title">DoSomething</span>(<span class="hljs-params">Person person</span>)</span>;
+
+<span class="hljs-keyword">var</span> person = PersonRepository.GeById(id);
+<span class="hljs-keyword">var</span> result = person.Map(p =&gt; PersonService.DoSomething(p));
+<span class="hljs-keyword">return</span> result.Match(
+    some =&gt; some.Match(
+            success =&gt; HttpOk(),
+            error =&gt; HttpBadRequest()
+        ),
+    _ =&gt; HttpNotFound()
+);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-38">
+        <div data-id="38" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="declarative-code-f-">Declarative code (F#)</h3>
+<pre><code class="lang-fsharp"><span class="hljs-keyword">let</span> signUp email password =
+    createAccount email password
+    &gt;&gt;=! verifyAccountNotExists
+    &gt;&gt;=! addAccountToDb
+    &gt;&gt;=! addEmptyShoppingList
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-39">
+        <div data-id="39" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="declarative-code-c-">Declarative code (C#)</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> SignInResult <span class="hljs-title">SignIn</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> email, <span class="hljs-keyword">string</span> password</span>) </span>=&gt;
+    <span class="hljs-keyword">new</span> SignInRequest(email, password)
+        .Pipe(ApiClient.Post)
+        .Bind(ParseErrors)
+        .Bind(SaveAccount);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-40">
+        <div data-id="40" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="io">IO</h3>
+<ul>
+<li>Co nejvíce na kraji</li>
+</ul>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> Recipe <span class="hljs-title">GetRecipe</span>(<span class="hljs-params">Database database, Guid id</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">GetUser</span>(<span class="hljs-params">Database database, Guid id</span>)</span>;
+
+<span class="hljs-keyword">var</span> recipe = GetRecipe(database, id);
+<span class="hljs-keyword">var</span> user = GetRecipe(database, userId);
+<span class="hljs-keyword">var</span> result = DoSomething(recipe, user);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-41">
+        <div data-id="41" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="reader">Reader</h3>
+<ul>
+<li><a href="https://github.com/louthy/csharp-monad">https://github.com/louthy/csharp-monad</a></li>
+</ul>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> Reader&lt;Database, Recipe&gt; <span class="hljs-title">GetRecipe</span>(<span class="hljs-params">Guid id</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">public</span> Reader&lt;Database, User&gt; <span class="hljs-title">GetUser</span>(<span class="hljs-params">Guid id</span>)</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">from</span> recipe <span class="hljs-keyword">in</span> <span class="hljs-title">GetRecipe</span>(<span class="hljs-params">id</span>)
+<span class="hljs-keyword">from</span> user <span class="hljs-keyword">in</span> <span class="hljs-title">GetUser</span>(<span class="hljs-params">id</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">DoSomething</span>(<span class="hljs-params">recipe, user</span>)</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> Reader&lt;Database, Recipe&gt; <span class="hljs-title">GetRecipe</span>(<span class="hljs-params">Guid id</span>) </span>=&gt;
+    db =&gt; db.ExecuteQuery(<span class="hljs-string">"SELECT ... WHERE id = ?"</span>, id);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-42">
+        <div data-id="42" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="odkazy">Odkazy</h3>
+<ul>
+<li><a href="https://github.com/starychfojtu/SmartRecipes.Mobile">https://github.com/starychfojtu/SmartRecipes.Mobile</a></li>
+<li><a href="https://github.com/starychfojtu/SmartRecipes">https://github.com/starychfojtu/SmartRecipes</a></li>
+<li><a href="https://github.com/siroky/FuncSharp">https://github.com/siroky/FuncSharp</a></li>
+<li><a href="https://github.com/louthy/language-ext">https://github.com/louthy/language-ext</a></li>
+<li><a href="https://github.com/louthy/csharp-monad">https://github.com/louthy/csharp-monad</a></li>
+<li><a href="https://github.com/starychfojtu/ReadingList#Functional-programming">https://github.com/starychfojtu/ReadingList#Functional-programming</a></li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-43">
+        <div data-id="43" class="slide-overlay"></div>
+        <section class="slide-content"><h1 id="d-kuji-za-pozornost">Děkuji za pozornost</h1>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-44">
+        <div data-id="44" class="slide-overlay"></div>
+        <section class="slide-content"></section>
+      </div>
+    </div>
+</div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="overview">☷</div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  var $fragments = document.querySelectorAll('#slide-' + position + ' .fragment');
+  var fragmentsFinished = false;
+  if ($fragments.length) {
+    if (n > 0) {
+      var $f = document.querySelectorAll('#slide-' + position + ' .fragment.hidden');
+      if (!$f.length) fragmentsFinished = true;
+      else $f[0].classList.remove('hidden');
+    } else {
+      var $f = document.querySelectorAll('#slide-' + position + ' .fragment:not(.hidden)');
+      if (!$f.length) fragmentsFinished = true;
+      else $f[$f.length - 1].classList.add('hidden');
+    }
+  } else {
+    fragmentsFinished = true;
+  }
+
+  if (fragmentsFinished) {
+    /* Positions are 1-indexed, so we need to add and subtract 1 */
+    var nextPosition = (position - 1 + n) % numSlides + 1;
+
+    /* Normalize nextPosition in-case of a negative modulo result */
+    nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+    document.getElementById('slide-' + position).classList.add('hidden');
+    document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+    updateProgress();
+    updateURL();
+    updateTabIndex();
+  }
+
+}
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  try {
+    window.history.replaceState({}, null, '#' + currentPosition());
+  } catch (e) {
+    window.location.hash = currentPosition();
+  }
+}
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+    document.mozFullScreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+    docElem.requestFullscreen ||
+    docElem.msRequestFullscreen ||
+    docElem.mozRequestFullScreen ||
+    docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+    doc.exitFullscreen ||
+    doc.msExitFullscreen ||
+    doc.mozCancelFullScreen ||
+    doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function(e) {
+    if(e.target.tagName.toLowerCase() === 'textarea') return;
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    } else if (kc === 27) {
+      toggleOverview();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function(e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function(e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+  if (document.querySelector('.overview')) {
+    document.querySelector('.overview').onclick = function(e) {
+      toggleOverview();
+    }
+  }
+  var $overlays = document.querySelectorAll('.slide-overlay');
+  [].forEach.call($overlays, function($overlay) {
+    $overlay.onclick = function(event) {
+      navigate(parseInt(event.target.dataset.id) - currentPosition());
+      toggleOverview();
+    }
+  });
+
+  var $fragments = document.querySelectorAll('.fragment');
+  [].forEach.call($fragments, function($fragment) {
+    $fragment.classList.add('hidden');
+  });
+
+});
+
+function toggleOverview() {
+  if (window.$style !== undefined) {
+    window.$style.remove();
+    delete window.$style;
+    document.querySelector('.slides').classList.remove('active');
+  } else {
+    var $slides = document.querySelector('.slides');
+    $slides.classList.add('active');
+    var slidesList = document.querySelectorAll('.slide-wrapper');
+
+    var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName('body')[0],
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+    window.$style = document.createElement('style');
+    window.$style.innerHTML = '.slide-wrapper {width: ' + (x * 0.25) + 'px; height: ' + (y * 0.25) + 'px; } body .slide {width: ' + x + 'px; height: ' + y + 'px; position: relative; transform: scale(0.25,0.25); transform-origin: 0 0; } .slide.hidden{display: block; }';
+
+    document.getElementsByTagName('head')[0].appendChild(window.$style);
+  }
+}
+  </script>
+</body>
+</html>
