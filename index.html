@@ -734,6 +734,78 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-10">
         <div data-id="10" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="c-jako-funkcion-ln-jazyk">C# jako funkcionální jazyk</h3>
+<ul>
+<li>delegáty</li>
+<li>lambda funkce</li>
+<li>LINQ</li>
+<li>tuples</li>
+<li>some type inference</li>
+<li>static using</li>
+<li>System.Collections.Immutable</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-11">
+        <div data-id="11" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="c-8-jako-funkcion-ln-j-jazyk">C# 8 jako funkcionálnější jazyk</h3>
+<ul>
+<li>pattern matching (switch expression)</li>
+<li>records</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-12">
+        <div data-id="12" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="c-jako-je-t-funkcion-ln-j-jazyk">C# jako ještě funkcionálnější jazyk</h3>
+<ul>
+<li>FuncSharp (<a href="https://github.com/siroky/FuncSharp">https://github.com/siroky/FuncSharp</a>)</li>
+<li>LanguageExt (<a href="https://github.com/louthy/language-ext">https://github.com/louthy/language-ext</a>)</li>
+</ul>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-13">
+        <div data-id="13" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="unit-type">Unit type</h3>
+<pre><code class="lang-csharp">Func&lt;T&gt; vs Action&lt;T&gt;
+</code></pre>
+<pre><code class="lang-csharp">Task&lt;T&gt; vs Task
+</code></pre>
+<p>...</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-14">
+        <div data-id="14" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="pattern-matching">Pattern matching</h3>
+<ul>
+<li>zapamatování si konstruktoru díky immutability</li>
+<li>switch </li>
+<li>C# 8 switch expression</li>
+</ul>
+<pre><code class="lang-Fsharp"><span class="hljs-keyword">match</span> (x, y) <span class="hljs-keyword">with</span>
+| (<span class="hljs-number">5</span>, _) -&gt; ...
+| (_ <span class="hljs-number">12</span>) -&gt; ...
+| _ -&gt; ...
+
+<span class="hljs-keyword">match</span> list <span class="hljs-keyword">with</span>
+| (head, tail) -&gt; ...
+| [x, y, z] -&gt; ...
+| _ -&gt; ...
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-15">
+        <div data-id="15" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> d</span>)</span>;
 </code></pre>
@@ -743,8 +815,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-11">
-        <div data-id="11" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-16">
+        <div data-id="16" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> d</span>)
 </span>{
@@ -762,8 +834,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-12">
-        <div data-id="12" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-17">
+        <div data-id="17" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params">Year y, Month m, Day d</span>)
 </span>{
@@ -779,8 +851,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-13">
-        <div data-id="13" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-18">
+        <div data-id="18" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost-honest-signature">Silná typovost - honest signature</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
 </code></pre>
@@ -788,8 +860,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-14">
-        <div data-id="14" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-19">
+        <div data-id="19" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost-honest-signature">Silná typovost - honest signature</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
 </code></pre>
@@ -802,8 +874,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-15">
-        <div data-id="15" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-20">
+        <div data-id="20" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="immutability">Immutability</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">var</span> person = <span class="hljs-keyword">new</span> Person(...);
 PersonPrinter.Print(person);
@@ -818,8 +890,8 @@ PersonPrinter.Print(person);
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-16">
-        <div data-id="16" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-21">
+        <div data-id="21" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="immutability">Immutability</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
 {
@@ -840,8 +912,8 @@ PersonPrinter.Print(person);
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-17">
-        <div data-id="17" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-22">
+        <div data-id="22" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="expressions-over-statements">Expressions over statements</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">int</span> result;
 
@@ -860,8 +932,8 @@ PersonPrinter.Print(person);
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-18">
-        <div data-id="18" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-23">
+        <div data-id="23" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="expressions-over-statements">Expressions over statements</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">int</span> result;
 
@@ -882,8 +954,8 @@ PersonPrinter.Print(person);
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-19">
-        <div data-id="19" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-24">
+        <div data-id="24" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="co-s-t-mhle-">Co s tímhle ?</h3>
 <pre><code class="lang-csharp">StreamReader sr;
 <span class="hljs-keyword">int</span> result;
@@ -897,78 +969,6 @@ PersonPrinter.Print(person);
     sr.Dispose();
 }
 <span class="hljs-keyword">return</span> result;
-</code></pre>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-20">
-        <div data-id="20" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="c-jako-funkcion-ln-jazyk">C# jako funkcionální jazyk</h3>
-<ul>
-<li>delegáty</li>
-<li>lambda funkce</li>
-<li>LINQ</li>
-<li>tuples</li>
-<li>some type inference</li>
-<li>static using</li>
-<li>System.Collections.Immutable</li>
-</ul>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-21">
-        <div data-id="21" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="c-8-jako-funkcion-ln-j-jazyk">C# 8 jako funkcionálnější jazyk</h3>
-<ul>
-<li>pattern matching (switch expression)</li>
-<li>records</li>
-</ul>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-22">
-        <div data-id="22" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="c-jako-je-t-funkcion-ln-j-jazyk">C# jako ještě funkcionálnější jazyk</h3>
-<ul>
-<li>FuncSharp (<a href="https://github.com/siroky/FuncSharp">https://github.com/siroky/FuncSharp</a>)</li>
-<li>LanguageExt (<a href="https://github.com/louthy/language-ext">https://github.com/louthy/language-ext</a>)</li>
-</ul>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-23">
-        <div data-id="23" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="unit-type">Unit type</h3>
-<pre><code class="lang-csharp">Func&lt;T&gt; vs Action&lt;T&gt;
-</code></pre>
-<pre><code class="lang-csharp">Task&lt;T&gt; vs Task
-</code></pre>
-<p>...</p>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-24">
-        <div data-id="24" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="pattern-matching">Pattern matching</h3>
-<ul>
-<li>zapamatování si konstruktoru díky immutability</li>
-<li>switch </li>
-<li>C# 8 switch expression</li>
-</ul>
-<pre><code class="lang-Fsharp"><span class="hljs-keyword">match</span> (x, y) <span class="hljs-keyword">with</span>
-| (<span class="hljs-number">5</span>, _) -&gt; ...
-| (_ <span class="hljs-number">12</span>) -&gt; ...
-| _ -&gt; ...
-
-<span class="hljs-keyword">match</span> list <span class="hljs-keyword">with</span>
-| (head, tail) -&gt; ...
-| [x, y, z] -&gt; ...
-| _ -&gt; ...
 </code></pre>
 </section>
       </div>
@@ -1307,8 +1307,8 @@ result.Match(
 <span class="hljs-function"><span class="hljs-keyword">public</span> Reader&lt;Database, User&gt; <span class="hljs-title">GetUser</span>(<span class="hljs-params">Guid id</span>)</span>;
 
 <span class="hljs-function"><span class="hljs-keyword">from</span> recipe <span class="hljs-keyword">in</span> <span class="hljs-title">GetRecipe</span>(<span class="hljs-params">id</span>)
-<span class="hljs-keyword">from</span> user <span class="hljs-keyword">in</span> <span class="hljs-title">GetUser</span>(<span class="hljs-params">id</span>)</span>;
-<span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">DoSomething</span>(<span class="hljs-params">recipe, user</span>)</span>;
+<span class="hljs-keyword">from</span> user <span class="hljs-keyword">in</span> <span class="hljs-title">GetUser</span>(<span class="hljs-params">id</span>)
+<span class="hljs-keyword">select</span> <span class="hljs-title">DoSomething</span>(<span class="hljs-params">recipe, user</span>)</span>;
 
 <span class="hljs-function"><span class="hljs-keyword">public</span> Reader&lt;Database, Recipe&gt; <span class="hljs-title">GetRecipe</span>(<span class="hljs-params">Guid id</span>) </span>=&gt;
     db =&gt; db.ExecuteQuery(<span class="hljs-string">"SELECT ... WHERE id = ?"</span>, id);
