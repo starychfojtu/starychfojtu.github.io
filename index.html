@@ -697,11 +697,11 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-7">
         <div data-id="7" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="pure-funkce-je-">Pure funkce je...</h3>
+        <section class="slide-content"><h3 id="co-n-m-to-p-in-">Co nám to přináší ?</h3>
 <ul>
-<li>Jednoduše paralelizovatelné</li>
-<li>Snadně testovatelná</li>
-<li>Lehce cachovatelná</li>
+<li>paralelizace</li>
+<li>testování</li>
+<li>cachování</li>
 <li>Zbavení se faktoru času =&gt; lehčí reasoning</li>
 </ul>
 </section>
@@ -710,7 +710,7 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-8">
         <div data-id="8" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="-i-lehko-composovateln-">...i lehko composovatelná</h3>
+        <section class="slide-content"><h3 id="composability">Composability</h3>
 <pre><code>f: a -&gt; b
 g: b -&gt; c
 
@@ -735,7 +735,9 @@ composed = f &gt;&gt; g
       <div class="slide hidden" id="slide-10">
         <div data-id="10" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z</span>)</span>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> d</span>)</span>;
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">GetCalendarFor</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y</span>)</span>;
 </code></pre>
 </section>
       </div>
@@ -744,9 +746,17 @@ composed = f &gt;&gt; g
       <div class="slide hidden" id="slide-11">
         <div data-id="11" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z</span>)</span>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> d</span>)
+</span>{
+    <span class="hljs-keyword">if</span> (IsNotValidMonth(m)) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidMonthException();
+    ...
+}
 </code></pre>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params">Year x, Month y, Day z</span>)</span>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Calendar <span class="hljs-title">GetCalendarFor</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> m</span>)
+</span>{
+    <span class="hljs-keyword">if</span> (IsNotValidMonth(m)) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidMonthException();
+    ...
+}
 </code></pre>
 </section>
       </div>
@@ -755,11 +765,15 @@ composed = f &gt;&gt; g
       <div class="slide hidden" id="slide-12">
         <div data-id="12" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z</span>)</span>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params">Year y, Month m, Day d</span>)
+</span>{
+    ...
+}
 </code></pre>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params">Year x, Month y, Day z</span>)</span>
-</code></pre>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Either&lt;Date, DateError&gt; <span class="hljs-title">Create</span>(<span class="hljs-params">Year x, Month y, Day z</span>)</span>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Calendar <span class="hljs-title">GetCalendarFor</span>(<span class="hljs-params">Month m</span>)
+</span>{
+    ...
+}
 </code></pre>
 </section>
       </div>
@@ -767,7 +781,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-13">
         <div data-id="13" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost-2">Silná typovost 2</h3>
+        <section class="slide-content"><h3 id="siln-typovost-honest-signature">Silná typovost - honest signature</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
 </code></pre>
 </section>
@@ -776,50 +790,36 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-14">
         <div data-id="14" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost-2">Silná typovost 2</h3>
+        <section class="slide-content"><h3 id="siln-typovost-honest-signature">Silná typovost - honest signature</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
 </code></pre>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> IOption&lt;Person&gt; <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
 </code></pre>
+<ul>
+<li>caller over callee</li>
+</ul>
 </section>
       </div>
     </div>
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-15">
         <div data-id="15" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost-3">Silná typovost 3</h3>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
+        <section class="slide-content"><h3 id="immutability">Immutability</h3>
+<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> person = <span class="hljs-keyword">new</span> Person(...);
+PersonPrinter.Print(person);
 </code></pre>
+<ul>
+<li><p>důvěra v cizí kód</p>
+</li>
+<li><p>&quot;thread-safe&quot;</p>
+</li>
+</ul>
 </section>
       </div>
     </div>
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-16">
         <div data-id="16" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost-3">Silná typovost 3</h3>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
-</code></pre>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car, <span class="hljs-keyword">out</span> Error error</span>)</span>
-</code></pre>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-17">
-        <div data-id="17" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost-3">Silná typovost 3</h3>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
-</code></pre>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car, <span class="hljs-keyword">out</span> Error error</span>)</span>
-</code></pre>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Either&lt;Car, RepairError&gt; <span class="hljs-title">Repair</span>(<span class="hljs-params">Car car</span>)</span>
-</code></pre>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-18">
-        <div data-id="18" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="immutability">Immutability</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>
 {
@@ -840,13 +840,13 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-19">
-        <div data-id="19" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-17">
+        <div data-id="17" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="expressions-over-statements">Expressions over statements</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">int</span> result;
 
 <span class="hljs-keyword">if</span> (something) 
-{
+{  
     result = <span class="hljs-number">1</span>;
 }
 <span class="hljs-keyword">else</span> 
@@ -860,8 +860,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-20">
-        <div data-id="20" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-18">
+        <div data-id="18" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="expressions-over-statements">Expressions over statements</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">int</span> result;
 
@@ -882,8 +882,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-21">
-        <div data-id="21" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-19">
+        <div data-id="19" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="co-s-t-mhle-">Co s tímhle ?</h3>
 <pre><code class="lang-csharp">StreamReader sr;
 <span class="hljs-keyword">int</span> result;
@@ -902,8 +902,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-22">
-        <div data-id="22" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-20">
+        <div data-id="20" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="c-jako-funkcion-ln-jazyk">C# jako funkcionální jazyk</h3>
 <ul>
 <li>delegáty</li>
@@ -918,8 +918,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-23">
-        <div data-id="23" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-21">
+        <div data-id="21" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="c-8-jako-funkcion-ln-j-jazyk">C# 8 jako funkcionálnější jazyk</h3>
 <ul>
 <li>pattern matching (switch expression)</li>
@@ -929,8 +929,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-24">
-        <div data-id="24" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-22">
+        <div data-id="22" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="c-jako-je-t-funkcion-ln-j-jazyk">C# jako ještě funkcionálnější jazyk</h3>
 <ul>
 <li>FuncSharp (<a href="https://github.com/siroky/FuncSharp">https://github.com/siroky/FuncSharp</a>)</li>
@@ -940,8 +940,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-25">
-        <div data-id="25" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-23">
+        <div data-id="23" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="unit-type">Unit type</h3>
 <pre><code class="lang-csharp">Func&lt;T&gt; vs Action&lt;T&gt;
 </code></pre>
@@ -952,10 +952,11 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-26">
-        <div data-id="26" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-24">
+        <div data-id="24" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="pattern-matching">Pattern matching</h3>
 <ul>
+<li>zapamatování si konstruktoru díky immutability</li>
 <li>switch </li>
 <li>C# 8 switch expression</li>
 </ul>
@@ -973,8 +974,8 @@ composed = f &gt;&gt; g
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-27">
-        <div data-id="27" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-25">
+        <div data-id="25" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="probl-m">Problém</h3>
 <ul>
 <li>chceme funkci co k nullable vstupu přičte 5 a vydělí druhým parametrem</li>
@@ -988,12 +989,15 @@ composed = f &gt;&gt; g
     <span class="hljs-keyword">return</span> y <span class="hljs-keyword">is</span> <span class="hljs-literal">null</span> ? <span class="hljs-number">42</span> : y.Value;
 }
 </code></pre>
+<ul>
+<li>v error handlingu se ztrácí myšlenka</li>
+</ul>
 </section>
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-28">
-        <div data-id="28" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-26">
+        <div data-id="26" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="jin-mo-nost">Jiná možnost</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params"><span class="hljs-keyword">int</span>? input, <span class="hljs-keyword">int</span> divider</span>)
 </span>{
@@ -1006,12 +1010,15 @@ composed = f &gt;&gt; g
     <span class="hljs-keyword">return</span> (input.Value + <span class="hljs-number">5</span>) / divider;
 }
 </code></pre>
+<ul>
+<li>musíme na začátky vědět jak se všechno může pokazit (zapomeneme a duplikujeme)</li>
+</ul>
 </section>
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-29">
-        <div data-id="29" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-27">
+        <div data-id="27" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="option">Option</h3>
 <pre><code class="lang-csharp">IOption&lt;<span class="hljs-keyword">int</span>&gt; ~ <span class="hljs-keyword">int</span>?
 IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Person?)
@@ -1020,9 +1027,41 @@ IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Per
 
 <span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params">IOption&lt;<span class="hljs-keyword">int</span>&gt; input, <span class="hljs-keyword">int</span> divider</span>) </span>=&gt;
     input
-        .Map(v =&gt; v + <span class="hljs-number">5</span>)
+        .Map(v =&gt; v + <span class="hljs-number">5</span>) <span class="hljs-comment">//</span>
         .FlatMap(v =&gt; Div(v, divider))
         .GetOrElse(<span class="hljs-number">42</span>);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-28">
+        <div data-id="28" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="n-co-podobn-ho-u-jsem-vid-l">Něco podobného už jsem viděl</h3>
+<pre><code class="lang-csharp">IOption&lt;<span class="hljs-keyword">int</span>&gt; ~ <span class="hljs-keyword">int</span>?
+IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Person?)
+
+<span class="hljs-function"><span class="hljs-keyword">public</span> IEnumerable&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">SomeF</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b</span>)
+
+<span class="hljs-keyword">public</span> IEnumerable&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">F</span>(<span class="hljs-params">IEnumerable&lt;<span class="hljs-keyword">int</span>&gt; inputs, <span class="hljs-keyword">int</span> x</span>) </span>=&gt;
+    inputs
+        .Select(v =&gt; v + <span class="hljs-number">5</span>) <span class="hljs-comment">// Map</span>
+        .SelectMany(v =&gt; SomeF(v, x)); <span class="hljs-comment">// FlatMap</span>
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-29">
+        <div data-id="29" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="linq">LINQ</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> IOption&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">Add</span>(<span class="hljs-params">IOption&lt;<span class="hljs-keyword">int</span>&gt; a, IOption&lt;<span class="hljs-keyword">int</span>&gt; b</span>) </span>=&gt;
+    a.FlatMap(valueA =&gt; b.Map(valueB =&gt; valueA + valueB))
+</code></pre>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> IOption&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">Add</span>(<span class="hljs-params">IOption&lt;<span class="hljs-keyword">int</span>&gt; a, IOption&lt;<span class="hljs-keyword">int</span>&gt; b</span>) </span>=&gt;
+    <span class="hljs-keyword">from</span> valueA <span class="hljs-keyword">in</span> a
+    <span class="hljs-keyword">from</span> valueB <span class="hljs-keyword">in</span> b
+    <span class="hljs-keyword">select</span> valueA + valueB
 </code></pre>
 </section>
       </div>
@@ -1084,6 +1123,30 @@ result.Match(
       <div class="slide hidden" id="slide-33">
         <div data-id="33" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="error-handling">Error handling</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> Account <span class="hljs-title">SignUp</span>(<span class="hljs-params">Credentials creds</span>)</span>;
+<span class="hljs-function"><span class="hljs-keyword">public</span> Email <span class="hljs-title">CreateSignUpEmail</span>(<span class="hljs-params">Account account</span>)</span>;
+
+<span class="hljs-keyword">try</span> 
+{
+    <span class="hljs-keyword">var</span> account = SignUp(email, password);
+    <span class="hljs-keyword">var</span> email = CreateSignUpEmail(account);
+    ..
+}
+<span class="hljs-keyword">catch</span> (AccountAlreadyExistsException)
+{
+}
+<span class="hljs-keyword">catch</span> (InvalidEmailException)
+{
+}
+...
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-34">
+        <div data-id="34" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="error-handling">Error handling</h3>
 <pre><code class="lang-csharp"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> SignUpError
 {
     AccountAlreadyExists,
@@ -1102,8 +1165,8 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-34">
-        <div data-id="34" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-35">
+        <div data-id="35" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="error-handling">Error handling</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Account, SignUpError&gt; <span class="hljs-title">SignUp</span>(<span class="hljs-params">Credentials creds</span>)</span>;
 <span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Email, EmailError&gt; <span class="hljs-title">CreateSignUpEmail</span>(<span class="hljs-params">Account acc</span>)</span>;
@@ -1123,8 +1186,8 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-35">
-        <div data-id="35" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-36">
+        <div data-id="36" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="validation">Validation</h3>
 <pre><code class="lang-csharp">
 <span class="hljs-keyword">public</span> ITry&lt;Person, Error[]&gt; Create(<span class="hljs-keyword">string</span> name, <span class="hljs-keyword">string</span> email) =&gt;
@@ -1147,8 +1210,8 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden  " id="slide-36">
-        <div data-id="36" class="slide-overlay"></div>
+      <div class="slide hidden  " id="slide-37">
+        <div data-id="37" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="example">Example</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> Person <span class="hljs-title">GetById</span>(<span class="hljs-params">Guid id</span>)</span>;
 <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">DoSomething</span>(<span class="hljs-params">Person person</span>)</span>;
@@ -1171,8 +1234,8 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-37">
-        <div data-id="37" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-38">
+        <div data-id="38" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="more-functional-example">More functional example</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> IOption&lt;Person&gt; <span class="hljs-title">GetById</span>(<span class="hljs-params">Guid id</span>)</span>;
 <span class="hljs-function"><span class="hljs-keyword">public</span> ITry&lt;Unit&gt; <span class="hljs-title">DoSomething</span>(<span class="hljs-params">Person person</span>)</span>;
@@ -1191,27 +1254,14 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-38">
-        <div data-id="38" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-39">
+        <div data-id="39" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="declarative-code-f-">Declarative code (F#)</h3>
 <pre><code class="lang-fsharp"><span class="hljs-keyword">let</span> signUp email password =
     createAccount email password
-    &gt;&gt;=! verifyAccountNotExists
-    &gt;&gt;=! addAccountToDb
-    &gt;&gt;=! addEmptyShoppingList
-</code></pre>
-</section>
-      </div>
-    </div>
-    <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-39">
-        <div data-id="39" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="declarative-code-c-">Declarative code (C#)</h3>
-<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> SignInResult <span class="hljs-title">SignIn</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> email, <span class="hljs-keyword">string</span> password</span>) </span>=&gt;
-    <span class="hljs-keyword">new</span> SignInRequest(email, password)
-        .Pipe(ApiClient.Post)
-        .Bind(ParseErrors)
-        .Bind(SaveAccount);
+    &gt;&gt;= verifyAccountNotExists
+    &gt;&gt;= addAccountToDb
+    &gt;&gt;= addEmptyShoppingList
 </code></pre>
 </section>
       </div>
@@ -1219,6 +1269,19 @@ result.Match(
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-40">
         <div data-id="40" class="slide-overlay"></div>
+        <section class="slide-content"><h3 id="declarative-code-c-">Declarative code (C#)</h3>
+<pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> SignInResult <span class="hljs-title">SignIn</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> email, <span class="hljs-keyword">string</span> password</span>) </span>=&gt;
+    <span class="hljs-keyword">new</span> SignInRequest(email, password)
+        .Pipe(ApiClient.Post)
+        .FlatMap(ParseErrors)
+        .FlatMap(SaveAccount);
+</code></pre>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-41">
+        <div data-id="41" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="io">IO</h3>
 <ul>
 <li>Co nejvíce na kraji</li>
@@ -1234,8 +1297,8 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-41">
-        <div data-id="41" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-42">
+        <div data-id="42" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="reader">Reader</h3>
 <ul>
 <li><a href="https://github.com/louthy/csharp-monad">https://github.com/louthy/csharp-monad</a></li>
@@ -1254,8 +1317,8 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-42">
-        <div data-id="42" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-43">
+        <div data-id="43" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="odkazy">Odkazy</h3>
 <ul>
 <li><a href="https://github.com/starychfojtu/SmartRecipes.Mobile">https://github.com/starychfojtu/SmartRecipes.Mobile</a></li>
@@ -1269,15 +1332,15 @@ result.Match(
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-43">
-        <div data-id="43" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-44">
+        <div data-id="44" class="slide-overlay"></div>
         <section class="slide-content"><h1 id="d-kuji-za-pozornost">Děkuji za pozornost</h1>
 </section>
       </div>
     </div>
     <div class="slide-wrapper">
-      <div class="slide hidden" id="slide-44">
-        <div data-id="44" class="slide-overlay"></div>
+      <div class="slide hidden" id="slide-45">
+        <div data-id="45" class="slide-overlay"></div>
         <section class="slide-content"></section>
       </div>
     </div>
