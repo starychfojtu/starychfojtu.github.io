@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>Funkcionální programování v C\#</title>
+  <title>Functional programming in C\#</title>
   <style type="text/css">
     /* Color Palette Based on Monokai
 
@@ -615,7 +615,7 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide  " id="slide-1">
         <div data-id="1" class="slide-overlay"></div>
-        <section class="slide-content"><h1 id="funkcion-ln-programov-n-v-c-">Funkcionální programování v C#</h1>
+        <section class="slide-content"><h1 id="functional-programming-in-c-">Functional programming in C#</h1>
 <h2 id="josef-star-chfojt-">Josef Starýchfojtů</h2>
 </section>
       </div>
@@ -623,7 +623,7 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-2">
         <div data-id="2" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="kdo-to-je-">Kdo to je ?</h3>
+        <section class="slide-content"><h3 id="who-am-i-">Who am I ?</h3>
 <ul>
 <li>Josef Starýchfojtů</li>
 <li><a href="https://github.com/starychfojtu">https://github.com/starychfojtu</a></li>
@@ -639,7 +639,7 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-3">
         <div data-id="3" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="co-byste-tak-ekali">Co byste tak čekali</h3>
+        <section class="slide-content"><h3 id="what-you-may-expect">What you may expect</h3>
 <ul>
 <li><a href="https://fsprojects.github.io/Fabulous/">https://fsprojects.github.io/Fabulous/</a></li>
 <li>Nedostatek (FP) programátorů</li>
@@ -651,9 +651,9 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide hidden  " id="slide-4">
         <div data-id="4" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="funkcion-ln-programov-n-">Funkcionální programování</h3>
+        <section class="slide-content"><h3 id="functional-programming">Functional programming</h3>
 <ul>
-<li>Referenční transparentnost</li>
+<li>Referential transparency</li>
 </ul>
 <p><code>f(5) = 10</code> =&gt;
 <code>var a = f(5)</code> = <code>var a = 10</code></p>
@@ -663,34 +663,34 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-5">
         <div data-id="5" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="funkcion-ln-programov-n-">Funkcionální programování</h3>
+        <section class="slide-content"><h3 id="functional-programming">Functional programming</h3>
 <ul>
-<li>Referenční transparentnost</li>
+<li>Referential transparency</li>
 </ul>
 <p><code>f(5) = 10</code> =&gt;
 <code>var a = f(5)</code> = <code>var a = 10</code></p>
 <ul>
-<li>Pure funkce</li>
+<li>Pure function</li>
 </ul>
-<p>f(x) : f je pure funkce &lt;=&gt; f je RT pro každé x RT</p>
+<p>f(x) : f is pure &lt;=&gt; f is RT for every x RT</p>
 </section>
       </div>
     </div>
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-6">
         <div data-id="6" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="funkcion-ln-programov-n-">Funkcionální programování</h3>
+        <section class="slide-content"><h3 id="functional-programming">Functional programming</h3>
 <ul>
-<li>Referenční transparentnost</li>
+<li>Referential transparency</li>
 </ul>
 <p><code>f(5) = 10</code> =&gt;
 <code>var a = f(5)</code> = <code>var a = 10</code></p>
 <ul>
-<li>Pure funkce</li>
+<li>Pure function</li>
 </ul>
-<p>f(x) : f je pure funkce &lt;=&gt; f je RT pro každé x RT </p>
+<p>f(x) : f is pure &lt;=&gt; f is RT for every x RT </p>
 <ul>
-<li>Determinismus</li>
+<li>Determinism</li>
 </ul>
 <p><code>a = b</code> =&gt; <code>f(a) = f(b)</code></p>
 </section>
@@ -699,12 +699,12 @@ kbd {
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-7">
         <div data-id="7" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="co-n-m-to-p-in-">Co nám to přináší ?</h3>
+        <section class="slide-content"><h3 id="what-s-the-benefit-">What&#39;s the benefit ?</h3>
 <ul>
-<li>paralelizace</li>
-<li>testování</li>
-<li>cachování</li>
-<li>Zbavení se faktoru času =&gt; lehčí reasoning</li>
+<li>parallelization</li>
+<li>testability</li>
+<li>caching</li>
+<li>no time/state factor =&gt; easier reasoning</li>
 </ul>
 </section>
       </div>
@@ -726,9 +726,9 @@ composed = f &gt;&gt; g
         <div data-id="9" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="fp-vs-oop">FP vs OOP</h3>
 <ul>
-<li>těžké definovat (pure funkce vs polymorfismus ??)</li>
-<li>zvyky, techniky, patterny apod. se často spojují s paradigmatem</li>
-<li>podíváme se na ty, které se spojují s FP</li>
+<li>hard to define (pure functions vs polymorphism ??)</li>
+<li>techniques, patterns and so are usually though to be used within some paradigm </li>
+<li>let&#39;s see those commonly used within FP</li>
 </ul>
 </section>
       </div>
@@ -736,10 +736,10 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-10">
         <div data-id="10" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="c-jako-funkcion-ln-jazyk">C# jako funkcionální jazyk</h3>
+        <section class="slide-content"><h3 id="c-as-funcional-language">C# as funcional language</h3>
 <ul>
-<li>delegáty</li>
-<li>lambda funkce</li>
+<li>delegates</li>
+<li>lambda functions</li>
 <li>LINQ</li>
 <li>tuples</li>
 <li>some type inference</li>
@@ -752,7 +752,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-11">
         <div data-id="11" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="c-8-jako-funkcion-ln-j-jazyk">C# 8 jako funkcionálnější jazyk</h3>
+        <section class="slide-content"><h3 id="c-8-as-funcional-language">C# 8 as funcional language</h3>
 <ul>
 <li>pattern matching (switch expression)</li>
 <li>records</li>
@@ -763,7 +763,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-12">
         <div data-id="12" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="c-jako-je-t-funkcion-ln-j-jazyk">C# jako ještě funkcionálnější jazyk</h3>
+        <section class="slide-content"><h3 id="c-as-more-funcional-language">C# as more funcional language</h3>
 <ul>
 <li>FuncSharp (<a href="https://github.com/siroky/FuncSharp">https://github.com/siroky/FuncSharp</a>)</li>
 <li>LanguageExt (<a href="https://github.com/louthy/language-ext">https://github.com/louthy/language-ext</a>)</li>
@@ -788,7 +788,7 @@ composed = f &gt;&gt; g
         <div data-id="14" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="pattern-matching">Pattern matching</h3>
 <ul>
-<li>zapamatování si konstruktoru díky immutability</li>
+<li>immutability able us to rembember constructor</li>
 <li>switch </li>
 <li>C# 8 switch expression</li>
 </ul>
@@ -808,7 +808,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-15">
         <div data-id="15" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
+        <section class="slide-content"><h3 id="type-safety">Type safety</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> d</span>)</span>;
 </code></pre>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">GetCalendarFor</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y</span>)</span>;
@@ -819,7 +819,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-16">
         <div data-id="16" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
+        <section class="slide-content"><h3 id="type-safety">Type safety</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> m, <span class="hljs-keyword">int</span> d</span>)
 </span>{
     <span class="hljs-keyword">if</span> (IsNotValidMonth(m)) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidMonthException();
@@ -838,7 +838,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-17">
         <div data-id="17" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost">Silná typovost</h3>
+        <section class="slide-content"><h3 id="type-safety">Type safety</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Date <span class="hljs-title">Create</span>(<span class="hljs-params">Year y, Month m, Day d</span>)
 </span>{
     ...
@@ -855,7 +855,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-18">
         <div data-id="18" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost-honest-signature">Silná typovost - honest signature</h3>
+        <section class="slide-content"><h3 id="type-safety-honest-signature">Type safety - honest signature</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
 </code></pre>
 </section>
@@ -864,7 +864,7 @@ composed = f &gt;&gt; g
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-19">
         <div data-id="19" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="siln-typovost-honest-signature">Silná typovost - honest signature</h3>
+        <section class="slide-content"><h3 id="type-safety-honest-signature">Type safety - honest signature</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> Person <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
 </code></pre>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">static</span> IOption&lt;Person&gt; <span class="hljs-title">Get</span>(<span class="hljs-params">Guid id</span>)</span>
@@ -883,7 +883,7 @@ composed = f &gt;&gt; g
 PersonPrinter.Print(person);
 </code></pre>
 <ul>
-<li><p>důvěra v cizí kód</p>
+<li><p>we don&#39;t want to trust our code</p>
 </li>
 <li><p>&quot;thread-safe&quot;</p>
 </li>
@@ -958,7 +958,7 @@ PersonPrinter.Print(person);
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-24">
         <div data-id="24" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="co-s-t-mhle-">Co s tímhle ?</h3>
+        <section class="slide-content"><h3 id="but-this-has-no-easy-solution">But this has no easy solution</h3>
 <pre><code class="lang-csharp">StreamReader sr;
 <span class="hljs-keyword">int</span> result;
 <span class="hljs-keyword">try</span> {
@@ -978,10 +978,10 @@ PersonPrinter.Print(person);
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-25">
         <div data-id="25" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="probl-m">Problém</h3>
+        <section class="slide-content"><h3 id="problem">Problem</h3>
 <ul>
-<li>chceme funkci co k nullable vstupu přičte 5 a vydělí druhým parametrem</li>
-<li>pokud se něco pokazí, vrátí odpověď na všechno</li>
+<li>we want a function which adds 5 to our nullable input and then divides it with other</li>
+<li>if something goes wrong, return the answer to universe itself</li>
 </ul>
 <pre><code class="lang-csharp">
 <span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params"><span class="hljs-keyword">int</span>? input, <span class="hljs-keyword">int</span> divider</span>)
@@ -992,7 +992,7 @@ PersonPrinter.Print(person);
 }
 </code></pre>
 <ul>
-<li>v error handlingu se ztrácí myšlenka</li>
+<li>noisy code</li>
 </ul>
 </section>
       </div>
@@ -1000,7 +1000,7 @@ PersonPrinter.Print(person);
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-26">
         <div data-id="26" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="jin-mo-nost">Jiná možnost</h3>
+        <section class="slide-content"><h3 id="other-possibility">Other possibility</h3>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params"><span class="hljs-keyword">int</span>? input, <span class="hljs-keyword">int</span> divider</span>)
 </span>{
     <span class="hljs-keyword">var</span> <span class="hljs-keyword">default</span> = <span class="hljs-number">42</span>;
@@ -1013,7 +1013,7 @@ PersonPrinter.Print(person);
 }
 </code></pre>
 <ul>
-<li>musíme na začátky vědět jak se všechno může pokazit (zapomeneme a duplikujeme)</li>
+<li>we have to think about all cases, which we won&#39;t (cause we forget)</li>
 </ul>
 </section>
       </div>
@@ -1023,13 +1023,13 @@ PersonPrinter.Print(person);
         <div data-id="27" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="option">Option</h3>
 <pre><code class="lang-csharp">IOption&lt;<span class="hljs-keyword">int</span>&gt; ~ <span class="hljs-keyword">int</span>?
-IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Person?)
+IOption&lt;Person&gt; !~ Person (version <span class="hljs-number">8</span> Person?)
 
 <span class="hljs-function"><span class="hljs-keyword">public</span> IOption&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">Div</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b</span>)
 
 <span class="hljs-keyword">public</span> T <span class="hljs-title">F</span>(<span class="hljs-params">IOption&lt;<span class="hljs-keyword">int</span>&gt; input, <span class="hljs-keyword">int</span> divider</span>) </span>=&gt;
     input
-        .Map(v =&gt; v + <span class="hljs-number">5</span>) <span class="hljs-comment">//</span>
+        .Map(v =&gt; v + <span class="hljs-number">5</span>)
         .FlatMap(v =&gt; Div(v, divider))
         .GetOrElse(<span class="hljs-number">42</span>);
 </code></pre>
@@ -1039,9 +1039,9 @@ IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Per
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-28">
         <div data-id="28" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="n-co-podobn-ho-u-jsem-vid-l">Něco podobného už jsem viděl</h3>
+        <section class="slide-content"><h3 id="wait-i-have-seen-it">Wait, I have seen it</h3>
 <pre><code class="lang-csharp">IOption&lt;<span class="hljs-keyword">int</span>&gt; ~ <span class="hljs-keyword">int</span>?
-IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Person?)
+IOption&lt;Person&gt; !~ Person (version <span class="hljs-number">8</span> Person?)
 
 <span class="hljs-function"><span class="hljs-keyword">public</span> IEnumerable&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">SomeF</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b</span>)
 
@@ -1071,17 +1071,17 @@ IOption&lt;Person&gt; !~ Person (ve verzi <span class="hljs-number">8</span> Per
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-30">
         <div data-id="30" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="algebraick-datov-typy">Algebraické datové typy</h3>
+        <section class="slide-content"><h3 id="algebraic-data-types">Algebraic data types</h3>
 <ul>
 <li>Product (N-ární tuple) = AND</li>
 <li><p>Coproduct = OR</p>
 </li>
-<li><p>problém:</p>
+<li><p>problem: distinguish between line, paragraph end, document end</p>
 <pre><code class="lang-csharp"><span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">new</span> ParagraphReader();
 <span class="hljs-keyword">var</span> result = reader.Read(); 
 </code></pre>
 </li>
-<li>Co to asi vrací ? null pro konec nebo snad &quot;&quot; ?</li>
+<li>What is the return type ? null for end or &quot;&quot; ?</li>
 </ul>
 </section>
       </div>
@@ -1286,7 +1286,7 @@ result.Match(
         <div data-id="41" class="slide-overlay"></div>
         <section class="slide-content"><h3 id="io">IO</h3>
 <ul>
-<li>Co nejvíce na kraji</li>
+<li>As far as it can be</li>
 </ul>
 <pre><code class="lang-csharp"><span class="hljs-function"><span class="hljs-keyword">public</span> Recipe <span class="hljs-title">GetRecipe</span>(<span class="hljs-params">Database database, Guid id</span>)</span>;
 <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">GetUser</span>(<span class="hljs-params">Database database, Guid id</span>)</span>;
@@ -1321,7 +1321,7 @@ result.Match(
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-43">
         <div data-id="43" class="slide-overlay"></div>
-        <section class="slide-content"><h3 id="odkazy">Odkazy</h3>
+        <section class="slide-content"><h3 id="links">Links</h3>
 <ul>
 <li><a href="https://github.com/starychfojtu/SmartRecipes.Mobile">https://github.com/starychfojtu/SmartRecipes.Mobile</a></li>
 <li><a href="https://github.com/starychfojtu/SmartRecipes">https://github.com/starychfojtu/SmartRecipes</a></li>
@@ -1336,7 +1336,7 @@ result.Match(
     <div class="slide-wrapper">
       <div class="slide hidden" id="slide-44">
         <div data-id="44" class="slide-overlay"></div>
-        <section class="slide-content"><h1 id="d-kuji-za-pozornost">Děkuji za pozornost</h1>
+        <section class="slide-content"><h1 id="thanks-for-your-attention">Thanks for your attention</h1>
 </section>
       </div>
     </div>
