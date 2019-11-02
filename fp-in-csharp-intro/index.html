@@ -1,0 +1,1176 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Functional programming in C# #</title>
+    <meta name="description" content="">
+    <meta name="author" content="Josef Starychfojtu">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="//code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="//code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/night.css" id="theme">
+    <link type="text/css" rel="stylesheet" href="fsharp.formatting/styles/style.css" />
+    <link type="text/css" rel="stylesheet" href="fsharp.formatting/styles/deedle.css" />
+    <link type="text/css" rel="stylesheet" href="css/custom.css" />
+    <script src="fsharp.formatting/styles/tips.js" type="text/javascript"></script>
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/fsreveal.css">
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+    </script>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <script language="javascript" type="text/javascript">
+        function init()
+        {
+            websocket = new WebSocket("ws://"+window.location.host+"/websocket");
+            websocket.onmessage = function(evt) { location.reload(); };
+        }
+        window.addEventListener("load", init, false);
+    </script>
+</head>
+<body>
+    <div class="reveal">
+        
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section >
+<h1>Functional programming in C#</h1>
+<h2>Josef Starýchfojtů</h2>
+</section>
+<section >
+<h3>Who am I ?</h3>
+<ul>
+<li>Josef Starýchfojtů</li>
+<li><a href="https://github.com/starychfojtu">https://github.com/starychfojtu</a></li>
+<li><a href="https://twitter.com/JStarychfojtu">https://twitter.com/JStarychfojtu</a></li>
+<li>MFF UK</li>
+<li>Mews Systems (<a href="https://github.com/MewsSystems/developers)">https://github.com/MewsSystems/developers)</a></li>
+</ul>
+</section>
+<section >
+<h3>Why C# when we have F# ?</h3>
+<ul>
+<li>Lack of (FP) programmers</li>
+<li>We already have bunch of projects written in C#</li>
+</ul>
+</section>
+<section >
+<h3>What is functional programming ?</h3>
+<h4>Referential transparency</h4>
+<ul>
+<li>When f(5) = 10, then lines 1 and 2 are equivalent</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">var</span> a <span class="o">=</span> f(<span class="n">5</span>);
+<span class="k">var</span> a <span class="o">=</span> <span class="n">10</span>;
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>What's the benefit ?</h3>
+<ul>
+<li>no suprises on what the function actually does</li>
+<li>testability</li>
+<li>no time/state factor =&gt; easier reasoning</li>
+<li>parallelization</li>
+<li>caching</li>
+</ul>
+</section>
+<section >
+<h3>FP vs OOP</h3>
+<ul>
+<li>hard to define (pure functions vs polymorphism ??)</li>
+<li>techniques, patterns and so are usually thought to be used within some paradigm</li>
+<li>let's see those commonly used within FP (and yes, you can use them in OOP as well)</li>
+</ul>
+</section>
+<section >
+<h3>C# as funcional language</h3>
+<ul>
+<li>delegates</li>
+<li>lambda functions</li>
+<li>LINQ</li>
+<li>System.Collections.Immutable</li>
+<li>pattern matching (switch expression)</li>
+</ul>
+</section>
+<section >
+<h3>C# as more funcional language</h3>
+<ul>
+<li>FuncSharp (<a href="https://github.com/siroky/FuncSharp)">https://github.com/siroky/FuncSharp)</a></li>
+<li>LanguageExt (<a href="https://github.com/louthy/language-ext)">https://github.com/louthy/language-ext)</a></li>
+</ul>
+</section>
+<section >
+<h3>Concepts, techniques, patterns</h3>
+</section>
+<section >
+<section >
+<h3>Expressions over statements</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">int</span> result;
+
+<span class="k">if</span> (something) 
+{  
+    result <span class="o">=</span> <span class="n">1</span>;
+}
+<span class="k">else</span> 
+{
+    result <span class="o">=</span> <span class="n">2</span>;
+}
+
+<span class="k">return</span> result;
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Expressions over statements</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">return</span> something <span class="o">?</span> <span class="n">1</span> <span class="o">:</span> <span class="n">2</span>;
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Expressions over statements</h3>
+<ul>
+<li>Statements don't return values</li>
+<li>Statements usually mutate stuff</li>
+<li>Statements are hard to compose</li>
+</ul>
+</section>
+<section >
+<h3>Expressions over statements</h3>
+<ul>
+<li>We want to get rid of this</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">int</span> result;
+<span class="k">try</span> {
+    result <span class="o">=</span> ComputeValue();
+} <span class="k">catch</span> (SomeException e) {
+    Log(e);
+    result <span class="o">=</span> <span class="n">-1</span>;
+}
+<span class="k">return</span> result;
+</code></pre></td></tr></table>
+</section>
+</section>
+<section >
+<section >
+<h3>Immutability</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">var</span> person <span class="o">=</span> <span class="k">new</span> Person(<span class="o">.</span><span class="o">.</span><span class="o">.</span>);
+PersonPrinter.Print(person);
+</code></pre></td></tr></table>
+<ul>
+<li>How do we know that Print did not change person ? (Anybody with a reference can harm us)</li>
+<li>We don't want any mutable suprises</li>
+<li>We desire thread-safetiness</li>
+<li>If it wants to change the person, it has to return a new one and tell us</li>
+<li>May even be faster than mutating (we don't have to do deep copies)</li>
+</ul>
+</section>
+<section >
+<h3>Immutability</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> Person
+{
+    <span class="k">public</span> Person(PersonName name, MailAddress email)
+    {
+        Name <span class="o">=</span> name;
+        Email <span class="o">=</span> email;
+    }
+
+    <span class="k">public</span> PersonName Name { get; }
+    <span class="k">public</span> MailAddress Email { get; }
+
+    <span class="k">public</span> Person WithEmail(MailAddress email) <span class="o">=</span><span class="o">&gt;</span>
+        <span class="k">new</span> Person(Name, email);
+}
+</code></pre></td></tr></table>
+<ul>
+<li>Now we know it is safe to pass it as an argument</li>
+</ul>
+</section>
+</section>
+<section >
+<section >
+<h3>Algebraic data types</h3>
+<ul>
+<li>"Composition over Inheritance" - OOP Programmer</li>
+<li>Composable data types</li>
+<li>Product (N-ary tuple) = AND</li>
+<li>Coproduct = OR</li>
+</ul>
+</section>
+<section >
+<h3>Product</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> Point <span class="o">:</span> Product<span class="n">2</span>&lt;<span class="k">int</span>, <span class="k">int</span>&gt;
+{
+    <span class="k">public</span> Point(<span class="k">int</span> x, <span class="k">int</span> y)<span class="o">:</span> <span class="k">base</span>(x, y) {}
+
+    <span class="k">public</span> <span class="k">int</span> X <span class="o">=</span><span class="o">&gt;</span> ProductValue<span class="n">1</span>;
+    <span class="k">public</span> <span class="k">int</span> Y <span class="o">=</span><span class="o">&gt;</span> ProductValue<span class="n">2</span>;
+}
+</code></pre></td></tr></table>
+<ul>
+<li>N-ary tuple</li>
+<li>Basically same as System.Tuple<int,int></li>
+<li>Product1 is useful for type aliasing</li>
+</ul>
+</section>
+<section >
+<h3>Coproduct</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">var</span> reader <span class="o">=</span> <span class="k">new</span> ParagraphReader();
+<span class="k">var</span> result <span class="o">=</span> reader.Read(); 
+</code></pre></td></tr></table>
+<ul>
+<li>How to distinguish between line, paragraph end, document end ?</li>
+<li>What is the return type ? null for end or "" ?</li>
+</ul>
+</section>
+<section >
+<h3>Coproduct</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> ReaderResult <span class="o">:</span> Coproduct<span class="n">3</span>&lt;Line, ParagraphEnd, DocumentEnd&gt;
+{
+    <span class="k">public</span> ReaderResult(Line line)<span class="o">:</span> <span class="k">base</span>(line) {}
+    <span class="k">public</span> ReaderResult(ParagraphEnd paragraphEnd)<span class="o">:</span> <span class="k">base</span>(paragraphEnd) {}
+    <span class="k">public</span> ReaderResult(DocumentEnd documentEnd)<span class="o">:</span> <span class="k">base</span>(documentEnd) {}
+}
+</code></pre></td></tr></table>
+<ul>
+<li>Think of it as non-extensible single level inheritance in one place</li>
+<li>Forces composition</li>
+<li>Easier to add behavior, no nead to bloat the class with virtual methods</li>
+<li>Great for domain modeling, once you know them, you see them everywhere (we will revisit that)</li>
+</ul>
+</section>
+<section >
+<h3>Pattern matching</h3>
+<ul>
+<li>Switch expression</li>
+<li>Exhaustivenes</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fs"><span class="k">match</span> (x, y) <span class="k">with</span>
+<span class="o">|</span> (<span class="n">5</span>, <span class="o">_</span>) <span class="o">-&gt;</span> ...
+<span class="o">|</span> (<span class="o">_</span> <span class="n">12</span>) <span class="o">-&gt;</span> ...
+<span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> ...
+
+<span class="k">match</span> list <span class="k">with</span>
+<span class="o">|</span> (head, tail) <span class="o">-&gt;</span> ...
+<span class="o">|</span> [x, y, z] <span class="o">-&gt;</span> ...
+<span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> ...
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Coproduct + pattern matching example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">var</span> reader <span class="o">=</span> <span class="k">new</span> ParagraphReader();
+<span class="k">var</span> result <span class="o">=</span> reader.Read();
+<span class="k">var</span> foo <span class="o">=</span> result.Match(
+    line <span class="o">=</span><span class="o">&gt;</span> ProcessLine(line),
+    paragraphEnd <span class="o">=</span><span class="o">&gt;</span> EndParagraph(),
+    end <span class="o">=</span><span class="o">&gt;</span> End()
+);
+</code></pre></td></tr></table>
+<ul>
+<li>If new type of result is added, this won't compile</li>
+</ul>
+</section>
+<section >
+<h3>F# sneak peak</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fs"><span class="k">type</span> ReaderResult = 
+    <span class="o">|</span> Line <span class="k">of</span> string
+    <span class="o">|</span> ParagraphEnd
+    <span class="o">|</span> DocumentEnd
+
+<span class="k">let</span> f = 
+    <span class="k">match</span> read () <span class="k">with</span>
+    <span class="o">|</span> Line l <span class="o">-&gt;</span> process l
+    <span class="o">|</span> ParagraphEnd <span class="o">-&gt;</span> ...
+    <span class="o">|</span> DocumentEnd <span class="o">-&gt;</span> ...
+</code></pre></td></tr></table>
+</section>
+</section>
+<section >
+<section >
+<h3>Type safety</h3>
+</section>
+<section >
+<h3>Type safety - domain modeling</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> Job
+{
+    <span class="k">public</span> JobState State { get; } <span class="c">// Pending | InProgress | Finished</span>
+    <span class="k">public</span> Percentage Progress { get; } 
+    <span class="k">public</span> Json Result { get; }
+}
+</code></pre></td></tr></table>
+<ul>
+<li>What is in Result when it is not finished ?</li>
+<li>Does it make sense to have progress in pending and finished ? (I have to validate it etc.)</li>
+</ul>
+</section>
+<section >
+<h3>Type safety - domain modeling</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> PendingJob {}
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> InProgressJob 
+{
+    <span class="k">public</span> Percentage Progress { get; }
+}
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> FinishedJob 
+{
+    <span class="k">public</span> Json Result { get; }
+}
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> Job <span class="o">:</span> Coproduct<span class="n">3</span>&lt;PendingJob, InProgressJob, FinishedJob&gt;
+{
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+}
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Type safety - domain modeling</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> JobState <span class="o">:</span> Coproduct<span class="n">3</span>&lt;PendingJob, InProgressJob, FinishedJob&gt;
+{
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+}
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> Job
+{
+    <span class="k">public</span> JobState State { get; }
+    <span class="k">public</span> NonEmptyString Name { get; }
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+}
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Type safety - code deduplication</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">static</span> Date Create(<span class="k">int</span> y, <span class="k">int</span> m, <span class="k">int</span> d);
+
+<span class="k">static</span> Calendar GetCalendarFor(<span class="k">int</span> m);
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Type safety - code deduplication</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">static</span> Date Create(<span class="k">int</span> y, <span class="k">int</span> m, <span class="k">int</span> d)
+{
+    <span class="k">if</span> (IsNotValidMonth(m)) <span class="k">throw</span> <span class="k">new</span> InvalidMonthException();
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+}
+
+<span class="k">static</span> Calendar GetCalendarFor(<span class="k">int</span> m)
+{
+    <span class="k">if</span> (IsNotValidMonth(m)) <span class="k">throw</span> <span class="k">new</span> InvalidMonthException();
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+}
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Type safety - code deduplication</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> Month <span class="o">:</span> Product<span class="n">1</span>&lt;<span class="k">int</span>&gt;
+{
+    <span class="k">private</span> Month(<span class="k">int</span> <span class="k">value</span>)<span class="o">:</span> <span class="k">base</span>(<span class="k">value</span>) {}
+
+    <span class="k">public</span> <span class="k">static</span> Month Create(<span class="k">int</span> <span class="k">value</span>)
+    {
+        <span class="c">// Exceptions are not friends with FP, but we will work on that later.</span>
+        <span class="k">if</span> (IsNotValidMonth(m)) <span class="k">throw</span> <span class="k">new</span> InvalidMonthException();
+        <span class="k">return</span> <span class="k">new</span> Month(<span class="k">value</span>);
+    }
+}
+</code></pre></td></tr></table>
+<ul>
+<li>It also keeps the information in one place (domain modeling)</li>
+</ul>
+</section>
+<section >
+<h3>Type safety - code deduplication</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">static</span> Date Create(Year y, Month m, Day d)
+{
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+}
+
+<span class="k">static</span> Calendar GetCalendarFor(Month m)
+{
+    <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+}
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Type safety - honest signature</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">static</span> Person Get(<span class="k">string</span> id)
+</code></pre></td></tr></table>
+<ul>
+<li>What will this do when person is not found ?</li>
+</ul>
+</section>
+<section >
+<h3>Type safety - honest signature</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">static</span> Person Get(<span class="k">string</span> id)
+
+<span class="k">static</span> IOption&lt;Person&gt; Get(Guid id)
+</code></pre></td></tr></table>
+<ul>
+<li>Enforcing invariants on the type level (Guid instead of string and exception)</li>
+<li>Caller over callee (Caller decides)</li>
+</ul>
+</section>
+<section >
+<h3>Special types - Unit</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs">Func&lt;A&gt; vs Action
+Task&lt;T&gt; vs Task
+
+Action&lt;<span class="k">int</span>&gt; <span class="o">-</span><span class="o">&gt;</span> Func&lt;Unit, <span class="k">int</span>&gt; 
+Action <span class="o">-</span><span class="o">&gt;</span> Func&lt;Unit, Unit&gt;
+Task <span class="o">-</span><span class="o">&gt;</span> Task&lt;Unit&gt;
+</code></pre></td></tr></table>
+<ul>
+<li>Single value</li>
+</ul>
+</section>
+<section >
+<h3>Special types - Nothing</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> Nothing Foo()
+{
+    <span class="k">throw</span> <span class="k">new</span> Exception();
+}
+</code></pre></td></tr></table>
+<ul>
+<li>No value at all, cannot be created</li>
+<li>Its semantic is not supported by C#</li>
+</ul>
+</section>
+</section>
+<section >
+<section >
+<h3>Option</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> T F(<span class="k">int</span>? input, <span class="k">int</span> divider)
+{
+    <span class="k">var</span> x <span class="o">=</span> input?.Value <span class="o">+</span> <span class="n">5</span>;
+    <span class="k">return</span> x <span class="k">is</span> <span class="k">null</span> <span class="o">|</span><span class="o">|</span> divider <span class="o">=</span><span class="o">=</span> <span class="n">0</span> <span class="o">?</span> <span class="n">42</span> <span class="o">:</span> x.Value <span class="o">/</span> divider;
+}
+</code></pre></td></tr></table>
+<ul>
+<li>Noisy code</li>
+<li>We can forget to check for 0</li>
+</ul>
+</section>
+<section >
+<h3>Option</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> T F(<span class="k">int</span>? input, <span class="k">int</span> divider)
+{
+    <span class="k">if</span> (input <span class="k">is</span> <span class="k">null</span> <span class="o">|</span><span class="o">|</span> divider <span class="o">=</span><span class="o">=</span> <span class="n">0</span>)
+    {
+        <span class="k">return</span> <span class="n">42</span>;
+    }
+    
+    <span class="k">return</span> (input.Value <span class="o">+</span> <span class="n">5</span>) <span class="o">/</span> divider;
+}
+</code></pre></td></tr></table>
+<ul>
+<li>We have to think about all cases, which we won't (cause we forget)</li>
+</ul>
+</section>
+<section >
+<h3>Option</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs">IOption&lt;<span class="k">int</span>&gt; <span class="o">~</span> <span class="k">int</span>?
+IOption&lt;T&gt; <span class="o">=</span> Coproduct<span class="n">2</span>&lt;T, Unit&gt;
+
+<span class="k">public</span> IOption&lt;<span class="k">int</span>&gt; Div(<span class="k">int</span> a, <span class="k">int</span> b) <span class="o">=</span><span class="o">&gt;</span>
+    b.Match(
+        <span class="n">0</span>, _ <span class="o">=</span><span class="o">&gt;</span> Option.Empty&lt;<span class="k">int</span>&gt;(),
+        _ <span class="o">=</span><span class="o">&gt;</span> Option.Create(a <span class="o">/</span> b)
+    );
+
+<span class="k">public</span> <span class="k">int</span> F(IOption&lt;<span class="k">int</span>&gt; input, <span class="k">int</span> divider) <span class="o">=</span><span class="o">&gt;</span>
+    input
+        .Map(v <span class="o">=</span><span class="o">&gt;</span> v <span class="o">+</span> <span class="n">5</span>) <span class="c">// similar to '?.', but much more powerful</span>
+        .FlatMap(v <span class="o">=</span><span class="o">&gt;</span> Div(v, divider))
+        .GetOrElse(<span class="n">42</span>);
+</code></pre></td></tr></table>
+<ul>
+<li>Now we have it on one place and therefore never forgot</li>
+<li>It is clear what we want to do</li>
+<li>The information is visible in function signature</li>
+</ul>
+</section>
+<section >
+<h3>Option - Wait, you have seen it</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> IEnumerable&lt;<span class="k">int</span>&gt; SomeF(<span class="k">int</span> a, <span class="k">int</span> b)
+{
+    <span class="k">yield</span> <span class="k">return</span> a;
+    <span class="k">yield</span> <span class="k">return</span> b;
+}
+
+<span class="k">public</span> IEnumerable&lt;<span class="k">int</span>&gt; F(IEnumerable&lt;<span class="k">int</span>&gt; inputs, <span class="k">int</span> x) <span class="o">=</span><span class="o">&gt;</span>
+    inputs
+        .Select(v <span class="o">=</span><span class="o">&gt;</span> v <span class="o">+</span> <span class="n">5</span>) <span class="c">// Map</span>
+        .SelectMany(v <span class="o">=</span><span class="o">&gt;</span> SomeF(v, x)); <span class="c">// FlatMap</span>
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Option - LINQ</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> IOption&lt;<span class="k">int</span>&gt; Add(IOption&lt;<span class="k">int</span>&gt; a, IOption&lt;<span class="k">int</span>&gt; b) <span class="o">=</span><span class="o">&gt;</span>
+    a.FlatMap(valueA <span class="o">=</span><span class="o">&gt;</span> b.Map(valueB <span class="o">=</span><span class="o">&gt;</span> valueA <span class="o">+</span> valueB))
+
+<span class="k">public</span> IOption&lt;<span class="k">int</span>&gt; Add(IOption&lt;<span class="k">int</span>&gt; a, IOption&lt;<span class="k">int</span>&gt; b) <span class="o">=</span><span class="o">&gt;</span>
+    <span class="k">from</span> valueA <span class="k">in</span> a
+    <span class="k">from</span> valueB <span class="k">in</span> b
+    <span class="k">select</span> valueA <span class="o">+</span> valueB
+</code></pre></td></tr></table>
+</section>
+</section>
+<section >
+<section >
+<h3>Error handling</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> Account SignUp(Credentials creds);
+<span class="k">public</span> Email CreateSignUpEmail(Account account);
+
+<span class="k">try</span> 
+{
+    <span class="k">var</span> account <span class="o">=</span> SignUp(email, password);
+    <span class="k">var</span> email <span class="o">=</span> CreateSignUpEmail(account);
+    <span class="o">.</span><span class="o">.</span>
+}
+<span class="k">catch</span> (AccountAlreadyExistsException)
+{
+}
+<span class="k">catch</span> (InvalidEmailException)
+{
+}
+</code></pre></td></tr></table>
+<ul>
+<li>Only comments tell me what to do and we all know how that ends</li>
+<li>We don't want statements</li>
+</ul>
+</section>
+<section >
+<h3>Error handling</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs">ITry&lt;A, E&gt; <span class="o">=</span> Coproduct<span class="n">2</span>&lt;A, E&gt;
+
+<span class="k">public</span> <span class="k">enum</span> SignUpError
+{
+    AccountAlreadyExists,
+    InvalidEmail,
+    PasswordTooShort,
+    NoConnection
+}
+
+<span class="k">public</span> ITry&lt;Account, SignUpError&gt; SignUp(Credentials creds);
+<span class="k">public</span> Email CreateSignUpEmail(Account account);
+
+<span class="k">var</span> email <span class="o">=</span> SignUp(email, password)
+    .Map(SendEmail);
+</code></pre></td></tr></table>
+<ul>
+<li>If I need some error data, I can make the enum coproduct</li>
+<li>Now I cannot forget</li>
+<li>I have the error strongly typed (Exceptions can also be like that, but they are usually not)</li>
+</ul>
+</section>
+<section >
+<h3>Error handling</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> ITry&lt;Account, SignUpError&gt; SignUp(Credentials creds);
+<span class="k">public</span> ITry&lt;Email, EmailError&gt; CreateSignUpEmail(Account acc);
+
+<span class="k">var</span> email <span class="o">=</span> SignUp(email, password)
+    .MapError(CreateCommonError)
+    .FlatMap(a <span class="o">=</span><span class="o">&gt;</span> CreateSignUpEmail(a).MapError(CreateCommonError));
+
+<span class="k">public</span> ITry&lt;Account&gt; SignUp(<span class="k">string</span> email, <span class="k">string</span> password);
+
+<span class="k">var</span> email <span class="o">=</span> SignUp(email, password)
+    .FlatMap(CreateSignUpEmail);
+</code></pre></td></tr></table>
+<ul>
+<li>Weakly typed variant</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs">ITry&lt;A&gt; <span class="o">=</span> Coproduct<span class="n">2</span>&lt;A, IEnumerable&lt;Exception&gt;<span class="o">&gt;</span>
+</code></pre></td></tr></table>
+</section>
+</section>
+<section >
+<section >
+<h3>Validation</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> Person Create(<span class="k">string</span> name, <span class="k">string</span> email)
+{
+    <span class="k">var</span> exceptions <span class="o">=</span> <span class="k">new</span> List&lt;Exception&gt;();
+    <span class="k">if</span>(!TryParseName(name, <span class="k">out</span> <span class="k">var</span> stronglyTypedName))
+    {
+        exceptions.Add(<span class="k">new</span> InvalidNameException());
+    }
+
+    <span class="k">if</span>(!TryParseEmail(email, <span class="k">out</span> <span class="k">var</span> stronglyTypedEmail))
+    {
+        exceptions.Add(<span class="k">new</span> InvalidEmailException());
+    }
+
+    <span class="k">return</span> exceptions.IsEmpty <span class="o">?</span>
+        <span class="o">?</span> <span class="k">new</span> Person(stronglyTypedName, stronglyTypedEmail)
+        <span class="o">:</span> <span class="k">throw</span> <span class="k">new</span> AggregateException(exceptions);
+}
+</code></pre></td></tr></table>
+<ul>
+<li>Duplicates the logic</li>
+</ul>
+</section>
+<section >
+<h3>Validation</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> ITry&lt;Person, Error[]<span class="o">&gt;</span> Create(<span class="k">string</span> name, <span class="k">string</span> email) <span class="o">=</span><span class="o">&gt;</span>
+    Try.Aggregate(
+        CreateName(name),
+        CreateEmail(email)
+        (n, e) <span class="o">=</span><span class="o">&gt;</span> <span class="k">new</span> Person(n, e)
+    );
+
+<span class="k">private</span> ITry&lt;Email, Error[]<span class="o">&gt;</span> CreateEmail(<span class="k">string</span> email) <span class="o">=</span><span class="o">&gt;</span> <span class="o">.</span><span class="o">.</span><span class="o">.</span>
+<span class="k">private</span> ITry&lt;Name, Error[]<span class="o">&gt;</span> CreateName(<span class="k">string</span> name) <span class="o">=</span><span class="o">&gt;</span>
+    name.IsNullOrEmpty
+        <span class="o">?</span> Try.Error&lt;Name, Error[]<span class="o">&gt;</span>(Error.NameCannotBeEmpty)
+        <span class="o">:</span> Try.Success&lt;Name, Error[]<span class="o">&gt;</span>(<span class="k">new</span> Name(name));
+</code></pre></td></tr></table>
+</section>
+</section>
+<section >
+<section >
+<h3>Example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> Person GetById(Guid id);
+<span class="k">public</span> <span class="k">void</span> DoSomething(Person person);
+
+<span class="k">var</span> person <span class="o">=</span> PersonRepository.GeById(id);
+<span class="k">if</span> (person <span class="k">is</span> <span class="k">null</span>)
+    <span class="k">return</span> HttpNotFound();
+
+<span class="k">try</span> 
+{
+    PersonService.DoSomething(person);
+}
+<span class="k">catch</span> (SomePersonException e)
+{
+    <span class="k">return</span> HttpBadRequest();
+}
+<span class="k">return</span> HttpOk();
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>More functional example</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> IOption&lt;Person&gt; GetById(Guid id);
+<span class="k">public</span> ITry&lt;Unit&gt; DoSomething(Person person);
+
+<span class="k">var</span> person <span class="o">=</span> PersonRepository.GeById(id);
+<span class="k">var</span> result <span class="o">=</span> person.Map(p <span class="o">=</span><span class="o">&gt;</span> PersonService.DoSomething(p));
+<span class="k">return</span> result.Match(
+    some <span class="o">=</span><span class="o">&gt;</span> some.Match(
+            success <span class="o">=</span><span class="o">&gt;</span> HttpOk(),
+            error <span class="o">=</span><span class="o">&gt;</span> HttpBadRequest()
+        ),
+    _ <span class="o">=</span><span class="o">&gt;</span> HttpNotFound()
+);
+</code></pre></td></tr></table>
+</section>
+</section>
+<section >
+<section >
+<h3>From top to bottom</h3>
+<ul>
+<li>So how do these techniques evolve into whole functional app ?</li>
+<li>Functional application is just a bunch of function in modules combined to bigger ones.</li>
+<li>But real world apps have side effects, what to do ?</li>
+<li>Try to limit them.</li>
+<li>Simple way: unpure-pure-unpure sandwitch. (Not always applicable)</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">var</span> data <span class="o">=</span> FetchData();
+<span class="k">var</span> result <span class="o">=</span> PureFunction(data);
+<span class="k">var</span> probablyUnit <span class="o">=</span> Save(result);
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Advanced IO</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> IO&lt;Recipe&gt; GetRecipe(Environment environment, Guid id);
+<span class="k">public</span> IO&lt;User&gt; GetUser(Environment environment, Guid id);
+
+<span class="k">public</span> Something Foo(Guid id, Guid otherId) <span class="o">=</span><span class="o">&gt;</span>
+    <span class="k">from</span> recipe <span class="k">in</span> GetRecipe(environment, id);
+    <span class="k">from</span> user <span class="k">in</span> GetRecipe(environment, userId);
+    <span class="k">return</span> DoSomething(recipe, user);
+</code></pre></td></tr></table>
+<ul>
+<li>Makes explicit that it is IO</li>
+<li>Should be still as high as possible in code</li>
+<li>callee cannot perform the IO, caller always knows about it!</li>
+</ul>
+</section>
+<section >
+<h3>Reader</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> Reader&lt;Environment, Recipe&gt; GetRecipe(Guid id);
+<span class="k">public</span> Reader&lt;Environment, User&gt; GetUser(Guid id);
+
+<span class="k">public</span> Something Foo(Guid id, Guid otherId) <span class="o">=</span><span class="o">&gt;</span>
+    <span class="k">from</span> recipe <span class="k">in</span> GetRecipe(id)
+    <span class="k">from</span> user <span class="k">in</span> GetUser(otherId)
+    <span class="k">select</span> DoSomething(recipe, user);
+</code></pre></td></tr></table>
+<ul>
+<li><a href="https://github.com/louthy/csharp-monad">https://github.com/louthy/csharp-monad</a></li>
+<li>Reader will polish the code</li>
+</ul>
+</section>
+<section >
+<h3>Reader to the next level</h3>
+<ul>
+<li><a href="https://github.com/zio/zio">https://github.com/zio/zio</a></li>
+<li>Abstraction over effect: it can be async, from whatever source, returning more stuff etc.</li>
+</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="cs"><span class="k">public</span> IO&lt;E, Something&gt; Foo(Guid id, Guid otherId)
+    <span class="k">where</span> E: IRecipeProvider, IUserProvider 
+{
+    <span class="k">return</span>
+        <span class="k">from</span> recipe <span class="k">in</span> GetRecipe(id)
+        <span class="k">from</span> user <span class="k">in</span> GetUser(otherId)
+        <span class="k">select</span> DoSomething(recipe, user);
+}
+</code></pre></td></tr></table>
+</section>
+<section >
+<h3>Alternative IO - Free Monad</h3>
+<ul>
+<li>Program as data structure</li>
+<li>
+<p>Data structure gets interpreted, we are building the execution tree</p>
+<p>[lang=cs]
+public Program<Something> Foo(Guid id, Guid otherId)
+{
+return
+from recipe in GetRecipe(id)
+from user in GetUser(otherId)
+select DoSomething(recipe, user);
+}</p>
+</li>
+</ul>
+</section>
+</section>
+<section >
+<h3>Links</h3>
+<ul>
+<li><a href="https://github.com/siroky/FuncSharp">https://github.com/siroky/FuncSharp</a></li>
+<li><a href="https://github.com/louthy/language-ext">https://github.com/louthy/language-ext</a></li>
+<li><a href="https://github.com/louthy/csharp-monad">https://github.com/louthy/csharp-monad</a></li>
+<li><a href="https://github.com/starychfojtu/ReadingList#Functional-programming">https://github.com/starychfojtu/ReadingList#Functional-programming</a></li>
+</ul>
+</section>
+<section >
+<h1>Thanks for your attention</h1>
+</section>
+
+
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+        // Add the nohighlight class and data-noescape attribute to code elements that have already been formatted by FSharp.Formatting
+        $('pre.highlighted code').addClass('nohighlight').attr('data-noescape', '');
+
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Parallax scrolling
+            // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+            // parallaxBackgroundSize: '2100px 900px',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true, condition: function () { return !!document.body.classList; } },
+                { src: 'plugin/notes/notes.js', async: true, condition: function () { return !!document.body.classList; } }
+            ]
+        });
+
+    </script>
+</body>
+</html>
+
