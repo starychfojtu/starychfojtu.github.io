@@ -14,5 +14,6 @@
 ### Automated zero-downtime migrations - https://github.com/starychfojtu/starychfojtu.github.io/blob/master/Automated%20zero-downtime%20migrations.pdf
 - Presented on:
   - Backendisti meetup (#11) https://backendisti.cz/
+- Recording: https://youtu.be/WzhoxRsoBuM?t=8694
 
 ### Functional programming in C# podcast (in czech) - https://www.dotnetpodcast.cz/episodes/ep45/
