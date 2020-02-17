@@ -2,6 +2,7 @@
 
 ### Intro to functional programming in C# - https://starychfojtu.github.io/fp-in-csharp-intro/#/
 - Presented on: 
+  - Amsterdam dotnet meetup https://www.meetup.com/dotnet-amsterdam/events/267228367/
   - DotNet Days Conference https://www.dotnetdays.cz/
   - Monkey fest Conference https://www.meetup.com/xmdg-cz/events/255159549/
   - Mews meetup https://www.meetup.com/MEWS-Meetups/events/265500239/
