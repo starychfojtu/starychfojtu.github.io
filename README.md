@@ -6,7 +6,7 @@
   - DotNet Days Conference https://www.dotnetdays.cz/
   - Monkey fest Conference https://www.meetup.com/xmdg-cz/events/255159549/
   - Mews meetup https://www.meetup.com/MEWS-Meetups/events/265500239/
-- Recording: https://www.youtube.com/watch?v=dLmi267M28A
+- Recordings: https://youtu.be/t20txMT82ws, https://www.youtube.com/watch?v=dLmi267M28A
 
 ### Advanced functional programming in F# - https://starychfojtu.github.io
 - Presented on: 
