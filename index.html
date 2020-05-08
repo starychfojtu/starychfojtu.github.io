@@ -778,16 +778,14 @@
 <span class="l">5: </span>
 <span class="l">6: </span>
 <span class="l">7: </span>
-<span class="l">8: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">getUser</span> <span class="i">repo</span> <span class="i">email</span> <span class="o">=</span> <span class="i">repo</span><span class="o">.</span><span class="i">getByEmail</span> <span class="i">email</span>
 <span class="k">let</span> <span class="i">addShoppingList</span> <span class="i">repo</span> <span class="i">shoppingList</span> <span class="o">=</span> <span class="i">repo</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs52', 433)" onmouseover="showTip(event, 'fs52', 433)" class="i">add</span> <span class="i">shoppingList</span>
 
-<span class="k">let</span> <span class="i">main</span> <span class="i">userRepo</span> <span class="i">shoppingListRepo</span> <span class="i">email</span> <span class="o">=</span> <span class="i">monad</span> {
-    <span class="k">let!</span> <span class="i">user</span> <span class="o">=</span> <span class="i">getUser</span> <span class="i">userRepo</span> <span class="i">email</span>
+<span class="k">let</span> <span class="i">main</span> <span class="i">userRepo</span> <span class="i">shoppingListRepo</span> <span class="i">email</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="i">user</span> <span class="o">=</span> <span class="i">getUser</span> <span class="i">userRepo</span> <span class="i">email</span>
     <span class="k">let</span> <span class="i">shoppingList</span> <span class="o">=</span> <span class="i">ShoppingList</span><span class="o">.</span><span class="i">createEmpty</span> <span class="i">user</span>
-    <span class="k">return!</span> <span class="i">addShoppingList</span> <span class="i">shoppingListRepo</span> <span class="i">shoppingList</span>
-}
+    <span class="i">addShoppingList</span> <span class="i">shoppingListRepo</span> <span class="i">shoppingList</span>
 </code></pre></td>
 </tr>
 </table>
@@ -829,12 +827,12 @@
 <span class="l">14: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Email -&gt; Reader&lt;&#39;e, User&gt; where &#39;e : IUserRepository </span>
-<span class="k">let</span> <span class="i">getUser</span> <span class="i">email</span> <span class="o">=</span> 
-    <span class="i">Reader</span>(<span class="k">fun</span> (<span class="i">env</span><span class="o">:</span> <span class="i">IUserRepository</span>) <span class="k">-&gt;</span> <span class="i">env</span><span class="o">.</span><span class="i">getByEmail</span> <span class="i">email</span>)
+<span class="k">let</span> <span class="i">getUser</span><span class="o">&lt;</span><span class="o">&#39;</span><span class="i">e</span> <span class="k">when</span> <span class="o">&#39;</span><span class="i">e</span> <span class="o">:&gt;</span> <span class="i">IUserRepository</span><span class="o">&gt;</span> <span class="i">email</span> <span class="o">=</span> 
+    <span class="i">Reader</span>(<span class="k">fun</span> (<span class="i">env</span><span class="o">:</span> <span class="o">&#39;</span><span class="i">e</span>) <span class="k">-&gt;</span> <span class="i">env</span><span class="o">.</span><span class="i">getByEmail</span> <span class="i">email</span>)
 
 <span class="c">// ShoppingList -&gt; Reader&lt;&#39;e, ShoppingList&gt; where &#39;e : IShoppingListRepository </span>
-<span class="k">let</span> <span class="i">addShoppingList</span> <span class="i">shoppingList</span> <span class="o">=</span>
-    <span class="i">Reader</span>(<span class="k">fun</span> (<span class="i">env</span><span class="o">:</span> <span class="i">IShoppingListRepository</span>) <span class="k">-&gt;</span> <span class="i">env</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs52', 436)" onmouseover="showTip(event, 'fs52', 436)" class="i">add</span> <span class="i">shoppingList</span>)
+<span class="k">let</span> <span class="i">addShoppingList</span><span class="o">&lt;</span><span class="o">&#39;</span><span class="i">e</span> <span class="k">when</span> <span class="o">&#39;</span><span class="i">e</span> <span class="o">:&gt;</span> <span class="i">IShoppingListRepository</span><span class="o">&gt;</span> <span class="i">shoppingList</span> <span class="o">=</span>
+    <span class="i">Reader</span>(<span class="k">fun</span> (<span class="i">env</span><span class="o">:</span> <span class="o">&#39;</span><span class="i">e</span>) <span class="k">-&gt;</span> <span class="i">env</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs52', 436)" onmouseover="showTip(event, 'fs52', 436)" class="i">add</span> <span class="i">shoppingList</span>)
 
 <span class="c">// Reader&lt;&#39;e, ShoppingList&gt; where &#39;e : IUserRepository, IShoppingListRepository </span>
 <span class="k">let</span> <span class="i">main</span> <span class="i">email</span> <span class="o">=</span> <span class="i">monad</span> {
